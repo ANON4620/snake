@@ -53,7 +53,7 @@ class Snake {
     
       this.x -= 10;
       
-      if(this.x <= 0) {
+      if(this.x <= -10) {
         clearInterval(move);
         alert('Game Over!');
         removeAllEventListeners();
@@ -74,7 +74,7 @@ class Snake {
     
       this.y -= 10;
       
-      if(this.y <= 0) {
+      if(this.y <= -10) {
         clearInterval(move);
         alert('Game Over!');
         removeAllEventListeners();
