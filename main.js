@@ -55,6 +55,13 @@ class Snake {
       return false;
   }
   
+  touchedTail() {
+    for(let i = 2; i <= this.length - 1; i++) {
+      if(this.snake[1].x === this.snake[i].x && this.snake[1].y === this.snake[i].y)
+        return true;
+    }
+  }
+  
   draw() {
     const move = setInterval(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -100,20 +107,21 @@ class Snake {
           break;
       }
       
-      if(this.touchedBorder()) {
+      if(this.touchedBorder() || this.touchedTail()) {
         clearInterval(move);
         alert('Game Over!');
         removeAllEventListeners();
         state = 'STOP';
         const tryAgain = confirm('Would you like to try again?');
-        if(tryAgain) 
+        if (tryAgain)
           Game.reset();
-          
+      
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
-    }, intervalPerFrame);
-  }
-}
+      
+    }, intervalPerFrame); // setInterval
+  } // draw()
+} // Class
 
 class Food {
   constructor(width, height) {
@@ -140,6 +148,7 @@ class Food {
     else 
       return false;
   }
+  
 }
 
 let snake, food;
