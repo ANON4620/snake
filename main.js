@@ -10,17 +10,28 @@ const rightBtn = document.getElementById('right');
 const leftBtn = document.getElementById('left');
 const upBtn = document.getElementById('up');
 const downBtn = document.getElementById('down');
+const score = document.getElementById('score');
 
 const intervalPerFrame = 150;
 let state = 'START';
-let key;
+let key = null;
 
-
-function removeAllEventListeners() {
-  rightBtn.removeEventListener('tap', moveR);
-  leftBtn.removeEventListener('tap', moveL);
-  upBtn.removeEventListener('tap', moveU);
-  downBtn.removeEventListener('tap', moveD);
+const Game = {
+  score: 0,
+  
+  updateScore() {
+    this.score++;
+    score.innerText = `SCORE: ${this.score}`;
+  },
+  
+  reset() {
+    state = 'START';
+    key = null;
+    createObjects();
+    addAllEventListeners();
+    this.score = 0;
+    score.innerText = `SCORE: 0`;
+  }
 }
 
 class Snake {
@@ -31,6 +42,17 @@ class Snake {
     this.length = 1;
     this.differenceBetweenEachMove = 10;
     
+  }
+  
+  touchedBorder() {
+    if(this.snake[0].x >= canvas.width + 10 ||
+      this.snake[0].y >= canvas.height + 10 ||
+      this.snake[0].x <= -20 ||
+      this.snake[0].y <= -20) {
+      return true;
+    }
+    else
+      return false;
   }
   
   draw() {
@@ -52,6 +74,7 @@ class Snake {
             y: snake.snake[i - 1].y
           });
         }
+        Game.updateScore();
       }
       
       for(let i = this.length - 1; i >= 1; i--) {
@@ -77,14 +100,15 @@ class Snake {
           break;
       }
       
-      if(this.snake[0].x >= canvas.width + 10 ||
-         this.snake[0].y >= canvas.height + 10 ||
-         this.snake[0].x <= -20 ||
-         this.snake[0].y <= -20) {
+      if(this.touchedBorder()) {
         clearInterval(move);
         alert('Game Over!');
         removeAllEventListeners();
         state = 'STOP';
+        const tryAgain = confirm('Would you like to try again?');
+        if(tryAgain) 
+          Game.reset();
+          
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
     }, intervalPerFrame);
@@ -118,8 +142,12 @@ class Food {
   }
 }
 
-const snake = new Snake(0, 0, 10, 10);
-const food = new Food(10, 10);
+let snake, food;
+
+function createObjects() {
+  snake = new Snake(0, 0, 10, 10);
+  food = new Food(10, 10);
+}
 
 function moveR() {
   if(key !== 'LEFT' && key !== 'RIGHT') {
@@ -150,9 +178,38 @@ function moveD() {
   }
 }
 
-rightBtn.addEventListener('tap', moveR);
-leftBtn.addEventListener('tap', moveL);
-upBtn.addEventListener('tap', moveU);
-downBtn.addEventListener('tap', moveD);
+function direction() {
+  (event) => {
+    if(event.keyCode === 37)
+      moveL();
+    else if(event.keyCode === 38)
+      moveU();
+    else if(event.keyCode === 39)
+      moveR();
+    else if(event.keyCode === 40)
+      moveD();
+  }
+}
 
+function addAllEventListeners() {
+  rightBtn.addEventListener('tap', moveR);
+  leftBtn.addEventListener('tap', moveL);
+  upBtn.addEventListener('tap', moveU);
+  downBtn.addEventListener('tap', moveD);
+  
+  // for keyboard
+  document.addEventListener('keydown', direction);
+}
 
+function removeAllEventListeners() {
+  rightBtn.removeEventListener('tap', moveR);
+  leftBtn.removeEventListener('tap', moveL);
+  upBtn.removeEventListener('tap', moveU);
+  downBtn.removeEventListener('tap', moveD);
+  
+  // for keyboard
+  document.removeEventListener('keydown', direction);
+}
+
+createObjects();
+addAllEventListeners();
