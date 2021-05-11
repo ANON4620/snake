@@ -208,8 +208,8 @@ class Food {
   }
   
   changePosition() {
-    this.x = parseInt(((Math.random() * 200) + 1) / 10) * 10;
-    this.y = parseInt(((Math.random() * 200) + 1) / 10) * 10;
+    this.x = parseInt(((Math.random() * 190) + 1) / 10) * 10;
+    this.y = parseInt(((Math.random() * 190) + 1) / 10) * 10;
   }
   
   hasEaten() {
