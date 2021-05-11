@@ -22,9 +22,10 @@ class Snake {
   constructor(x, y, width, height) {
     this.width = width;
     this.height = height;
-    this.x = x;
-    this.y = y;
+    this.snake = [{ x: x, y: y }];
+    this.length = 1;
     this.differenceBetweenEachMove = 10;
+    
   }
   
   draw() {
@@ -32,34 +33,49 @@ class Snake {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       food.draw();
-      ctx.fillStyle = 'Black';
-      ctx.fillRect(this.x, this.y, this.width, this.height);
+      for(let i = 0; i < this.length; i++) {
+      ctx.fillStyle = (i === 0) ? 'Purple': 'Black';
+      ctx.fillRect(this.snake[i].x, this.snake[i].y, this.width, this.height);
+      }
+      
+      if(food.hasEaten()) {
+        food.changePosition();
+        this.length++;
+        for(let i = this.length - 1; i >= 1; i--) {
+          this.snake.push({
+            x: snake.snake[i - 1].x,
+            y: snake.snake[i - 1].y
+          });
+        }
+      }
+      
+      for(let i = this.length - 1; i >= 1; i--) {
+        this.snake[i].x = this.snake[i - 1].x;
+        this.snake[i].y = this.snake[i - 1].y;
+      }
       
       switch(key) {
         case 'RIGHT':
-          this.x += this.differenceBetweenEachMove;
+          this.snake[0].x += this.differenceBetweenEachMove;
           break;
           
         case 'LEFT':
-          this.x -= this.differenceBetweenEachMove;
+          this.snake[0].x -= this.differenceBetweenEachMove;
           break;
           
         case 'UP':
-          this.y -= this.differenceBetweenEachMove;
+          this.snake[0].y -= this.differenceBetweenEachMove;
           break;
           
         case 'DOWN':
-          this.y += this.differenceBetweenEachMove;
+          this.snake[0].y += this.differenceBetweenEachMove;
           break;
       }
       
-      if(food.hasEaten())
-        food.changePosition();
-      
-      if(this.x >= canvas.width + 10 ||
-         this.y >= canvas.height + 10 ||
-         this.x <= -20 ||
-         this.y <= -20) {
+      if(this.snake[0].x >= canvas.width + 10 ||
+         this.snake[0].y >= canvas.height + 10 ||
+         this.snake[0].x <= -20 ||
+         this.snake[0].y <= -20) {
         clearInterval(move);
         alert('Game Over!');
         removeAllEventListeners();
@@ -89,9 +105,10 @@ class Food {
   }
   
   hasEaten() {
-    if(snake.x === food.x && snake.y === food.y) {
-      return true;
-    }
+    if(snake.snake[0].x === food.x && snake.snake[0].y === food.y) 
+      return true; 
+    else 
+      return false;
   }
 }
 
