@@ -84,6 +84,7 @@ class Snake {
         clearInterval(move);
         alert('Game Over!');
         removeAllEventListeners();
+        state = 'STOP';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
     }, intervalPerFrame);
@@ -124,18 +125,18 @@ function moveR() {
   if(key !== 'LEFT' && key !== 'RIGHT') {
     key = 'RIGHT';
     if(state === 'START') {
-      state = 'STOP';
+      state = 'RUNNING';
       snake.draw();
     }
   }
 }
 function moveL() {
-  if(key !== 'LEFT' && key !== 'RIGHT') {
+  if(key !== 'LEFT' && key !== 'RIGHT' && state !== 'START') {
     key = 'LEFT';
   }
 }
 function moveU() {
-  if(key !== 'UP' && key !== 'DOWN') {
+  if(key !== 'UP' && key !== 'DOWN' && state !== 'START') {
     key = 'UP';
   }
 }
@@ -143,7 +144,7 @@ function moveD() {
   if(key !== 'UP' && key !== 'DOWN') {
     key = 'DOWN';
     if(state === 'START') {
-      state = 'STOP';
+      state = 'RUNNING';
       snake.draw();
     }
   }
