@@ -46,8 +46,8 @@ let snake, food;
 
 // Functions
 function createObjects() {
-  snake = new Snake(0, 0, 10, 10);
-  food = new Food(10, 10);
+  snake = new Snake(0, 0, 10);
+  food = new Food();
 }
 
 function moveR() {
@@ -152,9 +152,8 @@ const Game = {
 }
 
 class Snake {
-  constructor(x, y, width, height) {
-    this.width = width;
-    this.height = height;
+  constructor(x, y, box) {
+    this.box = box;
     this.snake = [{ x: x, y: y }];
     this.length = 1;
     this.differenceBetweenEachMove = 10;
@@ -172,9 +171,9 @@ class Snake {
       return false;
   }
   
-  touchedTail() {
-    for(let i = 2; i < this.length; i++) {
-      if(this.snake[1].x === this.snake[i].x && this.snake[1].y === this.snake[i].y)
+  hasCollide() {
+    for(let i = 1; i < this.length; i++) {
+      if(this.snake[0].x === this.snake[i].x && this.snake[0].y === this.snake[i].y)
         return true;
     }
   }
@@ -186,7 +185,7 @@ class Snake {
       food.draw();
       for(let i = 0; i < this.length; i++) {
       ctx.fillStyle = (i === 0) ? 'Purple': 'Black';
-      ctx.fillRect(this.snake[i].x, this.snake[i].y, this.width, this.height);
+      ctx.fillRect(this.snake[i].x, this.snake[i].y, this.box, this.box);
       }
       
       if(food.hasEaten()) {
@@ -225,7 +224,18 @@ class Snake {
           break;
       }
       
-      if(this.touchedBorder() || this.touchedTail()) {
+      if(this.touchedBorder()) {
+        if(this.snake[0].x < 0)
+          this.snake[0].x = canvas.width - 10;
+        else if(this.snake[0].y < 0)
+          this.snake[0].y = canvas.height - 10;
+        else if(this.snake[0].x > canvas.width - 10)
+          this.snake[0].x = 0;
+        else if(this.snake[0].y > canvas.height - 10)
+          this.snake[0].y = 0;
+      }
+      
+      if(this.hasCollide()) {
         clearInterval(move);
         Game.over();
       }
@@ -235,9 +245,8 @@ class Snake {
 } // Class
 
 class Food {
-  constructor(width, height) {
-    this.width = width;
-    this.height = height;
+  constructor() {
+    this.box = snake.box;
     this.x;
     this.y;
     this.changePosition();
@@ -245,12 +254,12 @@ class Food {
   
   draw() {
     ctx.fillStyle = 'Red';
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.fillRect(this.x, this.y, this.box, this.box);
   }
   
   changePosition() {
-    this.x = parseInt(((Math.random() * 190) + 1) / 10) * 10;
-    this.y = parseInt(((Math.random() * 190) + 1) / 10) * 10;
+    this.x = parseInt(((Math.random() * (canvas.width - 10)) + 1) / 10) * 10;
+    this.y = parseInt(((Math.random() * (canvas.height - 10)) + 1) / 10) * 10;
   }
   
   hasEaten() {
