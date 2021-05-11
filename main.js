@@ -1,3 +1,8 @@
+/*
+LIBRARIES:
+Tap.js - https://github.com/pukhalski/tap
+*/
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -6,16 +11,16 @@ const leftBtn = document.getElementById('left');
 const upBtn = document.getElementById('up');
 const downBtn = document.getElementById('down');
 
-const intervalPerFrame = 300;
+const intervalPerFrame = 150;
 let state = 'START';
 let key;
 
 
 function removeAllEventListeners() {
-  rightBtn.removeEventListener('click', moveR);
-  leftBtn.removeEventListener('click', moveL);
-  upBtn.removeEventListener('click', moveU);
-  downBtn.removeEventListener('click', moveD);
+  rightBtn.removeEventListener('tap', moveR);
+  leftBtn.removeEventListener('tap', moveL);
+  upBtn.removeEventListener('tap', moveU);
+  downBtn.removeEventListener('tap', moveD);
 }
 
 class Snake {
@@ -144,9 +149,9 @@ function moveD() {
   }
 }
 
-rightBtn.addEventListener('click', moveR);
-leftBtn.addEventListener('click', moveL);
-upBtn.addEventListener('click', moveU);
-downBtn.addEventListener('click', moveD);
+rightBtn.addEventListener('tap', moveR);
+leftBtn.addEventListener('tap', moveL);
+upBtn.addEventListener('tap', moveU);
+downBtn.addEventListener('tap', moveD);
 
 
