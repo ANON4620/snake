@@ -16,6 +16,76 @@ const intervalPerFrame = 150;
 let state = 'START';
 let key = null;
 
+let snake, food;
+
+function createObjects() {
+  snake = new Snake(0, 0, 10, 10);
+  food = new Food(10, 10);
+}
+
+function moveR() {
+  if(key !== 'LEFT' && key !== 'RIGHT') {
+    key = 'RIGHT';
+    if(state === 'START') {
+      state = 'RUNNING';
+      snake.draw();
+    }
+  }
+}
+function moveL() {
+  if(key !== 'LEFT' && key !== 'RIGHT' && state !== 'START') {
+    key = 'LEFT';
+  }
+}
+function moveU() {
+  if(key !== 'UP' && key !== 'DOWN' && state !== 'START') {
+    key = 'UP';
+  }
+}
+function moveD() {
+  if(key !== 'UP' && key !== 'DOWN') {
+    key = 'DOWN';
+    if(state === 'START') {
+      state = 'RUNNING';
+      snake.draw();
+    }
+  }
+}
+
+function direction() {
+  (event) => {
+    if(event.keyCode === 37)
+      moveL();
+    else if(event.keyCode === 38)
+      moveU();
+    else if(event.keyCode === 39)
+      moveR();
+    else if(event.keyCode === 40)
+      moveD();
+  }
+}
+
+function addAllEventListeners() {
+  rightBtn.addEventListener('tap', moveR);
+  leftBtn.addEventListener('tap', moveL);
+  upBtn.addEventListener('tap', moveU);
+  downBtn.addEventListener('tap', moveD);
+  
+  // for keyboard
+  document.addEventListener('keydown', direction);
+}
+
+function removeAllEventListeners() {
+  rightBtn.removeEventListener('tap', moveR);
+  leftBtn.removeEventListener('tap', moveL);
+  upBtn.removeEventListener('tap', moveU);
+  downBtn.removeEventListener('tap', moveD);
+  
+  // for keyboard
+  document.removeEventListener('keydown', direction);
+}
+
+
 const Game = {
   score: 0,
   
@@ -30,7 +100,7 @@ const Game = {
     createObjects();
     addAllEventListeners();
     this.score = 0;
-    score.innerText = `SCORE: 0`;
+    score.innerText = 'SCORE: 0';
   }
 }
 
@@ -151,74 +221,6 @@ class Food {
   
 }
 
-let snake, food;
-
-function createObjects() {
-  snake = new Snake(0, 0, 10, 10);
-  food = new Food(10, 10);
-}
-
-function moveR() {
-  if(key !== 'LEFT' && key !== 'RIGHT') {
-    key = 'RIGHT';
-    if(state === 'START') {
-      state = 'RUNNING';
-      snake.draw();
-    }
-  }
-}
-function moveL() {
-  if(key !== 'LEFT' && key !== 'RIGHT' && state !== 'START') {
-    key = 'LEFT';
-  }
-}
-function moveU() {
-  if(key !== 'UP' && key !== 'DOWN' && state !== 'START') {
-    key = 'UP';
-  }
-}
-function moveD() {
-  if(key !== 'UP' && key !== 'DOWN') {
-    key = 'DOWN';
-    if(state === 'START') {
-      state = 'RUNNING';
-      snake.draw();
-    }
-  }
-}
-
-function direction() {
-  (event) => {
-    if(event.keyCode === 37)
-      moveL();
-    else if(event.keyCode === 38)
-      moveU();
-    else if(event.keyCode === 39)
-      moveR();
-    else if(event.keyCode === 40)
-      moveD();
-  }
-}
-
-function addAllEventListeners() {
-  rightBtn.addEventListener('tap', moveR);
-  leftBtn.addEventListener('tap', moveL);
-  upBtn.addEventListener('tap', moveU);
-  downBtn.addEventListener('tap', moveD);
-  
-  // for keyboard
-  document.addEventListener('keydown', direction);
-}
-
-function removeAllEventListeners() {
-  rightBtn.removeEventListener('tap', moveR);
-  leftBtn.removeEventListener('tap', moveL);
-  upBtn.removeEventListener('tap', moveU);
-  downBtn.removeEventListener('tap', moveD);
-  
-  // for keyboard
-  document.removeEventListener('keydown', direction);
-}
 
 createObjects();
 addAllEventListeners();
