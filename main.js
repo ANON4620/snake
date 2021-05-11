@@ -1,8 +1,18 @@
 /*
 LIBRARIES:
 Tap.js - https://github.com/pukhalski/tap
+
+SOUNDS:
+https://mixkit.co/free-sound-effects/game/
+
 */
 
+// importing assets
+const gameOverSound = new Audio('./Assets/game-over.wav');
+const turnSound = new Audio('./Assets/turn.wav');
+const eatingSound = new Audio('./Assets/eating.wav');
+
+// Variables
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -18,6 +28,7 @@ let key = null;
 
 let snake, food;
 
+// Functions
 function createObjects() {
   snake = new Snake(0, 0, 10, 10);
   food = new Food(10, 10);
@@ -26,6 +37,7 @@ function createObjects() {
 function moveR() {
   if(key !== 'LEFT' && key !== 'RIGHT') {
     key = 'RIGHT';
+    turnSound.play();
     if(state === 'START') {
       state = 'RUNNING';
       snake.draw();
@@ -35,16 +47,19 @@ function moveR() {
 function moveL() {
   if(key !== 'LEFT' && key !== 'RIGHT' && state !== 'START') {
     key = 'LEFT';
+    turnSound.play();
   }
 }
 function moveU() {
   if(key !== 'UP' && key !== 'DOWN' && state !== 'START') {
     key = 'UP';
+    turnSound.play();
   }
 }
 function moveD() {
   if(key !== 'UP' && key !== 'DOWN') {
     key = 'DOWN';
+    turnSound.play();
     if(state === 'START') {
       state = 'RUNNING';
       snake.draw();
@@ -65,6 +80,7 @@ function direction() {
   }
 }
 
+// Event listeners
 function addAllEventListeners() {
   rightBtn.addEventListener('tap', moveR);
   leftBtn.addEventListener('tap', moveL);
@@ -86,6 +102,7 @@ function removeAllEventListeners() {
 }
 
 
+// Classes and Objects
 const Game = {
   score: 0,
   
@@ -101,6 +118,20 @@ const Game = {
     addAllEventListeners();
     this.score = 0;
     score.innerText = 'SCORE: 0';
+  },
+  
+  over() {
+    gameOverSound.play();
+    setTimeout(() => {
+      alert('Game Over!');
+      removeAllEventListeners();
+      state = 'STOP';
+      const tryAgain = confirm('Would you like to try again?');
+      if(tryAgain)
+        Game.reset();
+    
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }, 2000);
   }
 }
 
@@ -126,7 +157,7 @@ class Snake {
   }
   
   touchedTail() {
-    for(let i = 2; i <= this.length - 1; i++) {
+    for(let i = 2; i < this.length; i++) {
       if(this.snake[1].x === this.snake[i].x && this.snake[1].y === this.snake[i].y)
         return true;
     }
@@ -143,6 +174,7 @@ class Snake {
       }
       
       if(food.hasEaten()) {
+        eatingSound.play();
         food.changePosition();
         this.length++;
         for(let i = this.length - 1; i >= 1; i--) {
@@ -179,14 +211,7 @@ class Snake {
       
       if(this.touchedBorder() || this.touchedTail()) {
         clearInterval(move);
-        alert('Game Over!');
-        removeAllEventListeners();
-        state = 'STOP';
-        const tryAgain = confirm('Would you like to try again?');
-        if (tryAgain)
-          Game.reset();
-      
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        Game.over();
       }
       
     }, intervalPerFrame); // setInterval
