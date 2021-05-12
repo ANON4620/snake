@@ -26,7 +26,8 @@ document.querySelector('center').innerHTML =
     <h6>Press Right or Down to Start</h6>
     
     <b class="credits">CREDITS:</b><br>
-    <b>Swarnadeep Sarkar</b>`;
+    <b>Swarnadeep Sarkar</b>
+    <b>(ANON4620)</b>`;
 
 // Variables
 const canvas = document.getElementById('canvas');
