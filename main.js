@@ -129,12 +129,13 @@ const Game = {
   },
   
   reset() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     state = 'START';
     key = null;
     createObjects();
     addAllEventListeners();
     this.score = 0;
-    score.innerText = 'SCORE: 0';
+    score.innerText = `SCORE: ${this.score}`;
   },
   
   over() {
@@ -146,8 +147,7 @@ const Game = {
       const tryAgain = confirm('Would you like to try again?');
       if(tryAgain)
         Game.reset();
-    
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
     }, 2000);
   }
 }
