@@ -161,17 +161,17 @@ class Snake {
   }
   
   touchedBorder() {
-    if(this.snake[0].x >= canvas.width + 10 ||
-      this.snake[0].y >= canvas.height + 10 ||
-      this.snake[0].x <= -20 ||
-      this.snake[0].y <= -20) {
+    if(this.snake[0].x > canvas.width - 10 ||
+      this.snake[0].y > canvas.height - 10 ||
+      this.snake[0].x < 0 ||
+      this.snake[0].y < 0) {
       return true;
     }
     else
       return false;
   }
   
-  hasCollide() {
+  hasCollided() {
     for(let i = 1; i < this.length; i++) {
       if(this.snake[0].x === this.snake[i].x && this.snake[0].y === this.snake[i].y)
         return true;
@@ -235,7 +235,7 @@ class Snake {
           this.snake[0].y = 0;
       }
       
-      if(this.hasCollide()) {
+      if(this.hasCollided()) {
         clearInterval(move);
         Game.over();
       }
