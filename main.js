@@ -7,11 +7,6 @@ https://mixkit.co/free-sound-effects/game/
 
 */
 
-// importing assets
-const gameOverSound = new Audio('./Assets/game-over.wav');
-const turnSound = new Audio('./Assets/turn.wav');
-const eatingSound = new Audio('./Assets/eating.wav');
-
 // Loading body
 document.querySelector('center').innerHTML = 
 `<div class="container">
