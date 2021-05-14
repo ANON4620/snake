@@ -8,6 +8,8 @@ body {
 
 .container {
   position: relative;
+  width: 90vw;
+  height: 90vh;
 }
 
 button {
