@@ -84,17 +84,15 @@ function moveD() {
   }
 }
 
-function direction() {
-  (event) => {
-    if(event.keyCode === 37)
-      moveL();
-    else if(event.keyCode === 38)
-      moveU();
-    else if(event.keyCode === 39)
-      moveR();
-    else if(event.keyCode === 40)
-      moveD();
-  }
+function direction(event) {
+  if(event.keyCode === 37)
+    moveL();
+  else if(event.keyCode === 38)
+    moveU();
+  else if(event.keyCode === 39)
+    moveR();
+  else if(event.keyCode === 40)
+    moveD();
 }
 
 // Event listeners
