@@ -36,7 +36,7 @@ const upBtn = document.getElementById('up');
 const downBtn = document.getElementById('down');
 const score = document.getElementById('score');
 
-const intervalPerFrame = 150;
+const delayPerFrame = 150;
 let state = 'START';
 let key = null;
 
@@ -44,7 +44,7 @@ let snake, food;
 
 // Functions
 function createObjects() {
-  snake = new Snake(0, 0, 10);
+  snake = new Snake(0, 0, 10, 1);
   food = new Food();
 }
 
@@ -54,7 +54,8 @@ function moveR() {
     turnSound.play();
     if(state === 'START') {
       state = 'RUNNING';
-      snake.draw();
+      snake.setPositionsIntially();
+      snake.move();
     }
   }
 }
@@ -76,7 +77,8 @@ function moveD() {
     turnSound.play();
     if(state === 'START') {
       state = 'RUNNING';
-      snake.draw();
+      snake.setPositionsIntially();
+      snake.move();
     }
   }
 }
@@ -123,16 +125,6 @@ const Game = {
     score.innerText = `SCORE: ${this.score}`;
   },
   
-  reset() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    state = 'START';
-    key = null;
-    createObjects();
-    addAllEventListeners();
-    this.score = 0;
-    score.innerText = `SCORE: ${this.score}`;
-  },
-  
   over() {
     gameOverSound.play();
     setTimeout(() => {
@@ -144,16 +136,53 @@ const Game = {
         Game.reset();
         
     }, 2000);
+  },
+    
+  reset() {
+    this.clearCanvas();
+    state = 'START';
+    key = null;
+    this.score = 0;
+    score.innerText = `SCORE: ${this.score}`;
+    createObjects();
+    addAllEventListeners();
+  },
+  
+  clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 }
 
 class Snake {
-  constructor(x, y, box) {
+  constructor(x, y, box, length) {
     this.box = box;
     this.snake = [{ x: x, y: y }];
-    this.length = 1;
-    this.differenceBetweenEachMove = 10;
+    this.length = length;
+    this.step = 10;
     
+  }
+  
+  draw() {
+    for(let i = 0; i < this.length; i++) {
+      ctx.fillStyle = (i === 0) ? 'Purple' : 'Black';
+      ctx.fillRect(this.snake[i].x, this.snake[i].y, this.box, this.box);
+    }
+  }
+  
+  setPositions() {
+    for(let i = this.length - 1; i > 0; i--) {
+      this.snake[i].x = this.snake[i - 1].x;
+      this.snake[i].y = this.snake[i - 1].y;
+    }
+  }
+  
+  setPositionsIntially() {
+    for(let i = 1; i < this.length; i++) {
+      this.snake.push({
+        x: snake.snake[i - 1].x - 10,
+        y: snake.snake[i - 1].y
+      });
+    }
   }
   
   touchedBorder() {
@@ -174,21 +203,18 @@ class Snake {
     }
   }
   
-  draw() {
+  move() {
     const move = setInterval(() => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+      Game.clearCanvas();
       food.draw();
-      for(let i = 0; i < this.length; i++) {
-      ctx.fillStyle = (i === 0) ? 'Purple': 'Black';
-      ctx.fillRect(this.snake[i].x, this.snake[i].y, this.box, this.box);
-      }
+      
+      this.draw();
       
       if(food.hasEaten()) {
         eatingSound.play();
         food.changePosition();
         this.length++;
-        for(let i = this.length - 1; i >= 1; i--) {
+        for(let i = this.length - 1; i > 0; i--) {
           this.snake.push({
             x: snake.snake[i - 1].x,
             y: snake.snake[i - 1].y
@@ -197,26 +223,23 @@ class Snake {
         Game.updateScore();
       }
       
-      for(let i = this.length - 1; i >= 1; i--) {
-        this.snake[i].x = this.snake[i - 1].x;
-        this.snake[i].y = this.snake[i - 1].y;
-      }
+      this.setPositions();
       
       switch(key) {
         case 'RIGHT':
-          this.snake[0].x += this.differenceBetweenEachMove;
+          this.snake[0].x += this.step;
           break;
           
         case 'LEFT':
-          this.snake[0].x -= this.differenceBetweenEachMove;
+          this.snake[0].x -= this.step;
           break;
           
         case 'UP':
-          this.snake[0].y -= this.differenceBetweenEachMove;
+          this.snake[0].y -= this.step;
           break;
           
         case 'DOWN':
-          this.snake[0].y += this.differenceBetweenEachMove;
+          this.snake[0].y += this.step;
           break;
       }
       
@@ -236,7 +259,7 @@ class Snake {
         Game.over();
       }
       
-    }, intervalPerFrame); // setInterval
+    }, delayPerFrame); // setInterval
   } // draw()
 } // Class
 
