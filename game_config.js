@@ -10,7 +10,6 @@ const Game = {
 
   over() {
     gameOverSound.play();
-    navigator.vibrate(1000);
     setTimeout(() => {
       removeAllEventListeners();
       state = 'STOP';
