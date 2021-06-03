@@ -10,7 +10,7 @@ https://mixkit.co/free-sound-effects/game/
 let snake, food;
 
 function createObjects() {
-  snake = new Snake(0, 0, 10, 10);
+  snake = new Snake(0, 0, 10, 1);
   food = new Food();
 }
 
