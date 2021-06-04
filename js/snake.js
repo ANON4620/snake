@@ -1,4 +1,4 @@
-const delayPerFrame = 150;
+const delayPerFrame = 150; // milliseconds
 
 class Snake {
   constructor(x, y, box, length) {
@@ -16,21 +16,46 @@ class Snake {
     }
   }
   
-  setPositions() {
+  setPosition() {
+    for(let i = 1; i < this.length; i++)
+    {
+      this.snake.push({
+        x: snake.snake[i - 1].x - box,
+        y: snake.snake[i - 1].y
+      });
+    }
+  }
+  
+  updateHeadPosition() {
+    switch(key) {
+      case 'RIGHT':
+        this.snake[0].x += this.step;
+        break;
+    
+      case 'LEFT':
+        this.snake[0].x -= this.step;
+        break;
+    
+      case 'UP':
+        this.snake[0].y -= this.step;
+        break;
+    
+      case 'DOWN':
+        this.snake[0].y += this.step;
+        break;
+    }
+  }
+  
+  updateTailPosition() {
     for(let i = this.length - 1; i > 0; i--) {
       this.snake[i].x = this.snake[i - 1].x;
       this.snake[i].y = this.snake[i - 1].y;
     }
   }
   
-  setInitialPositions() {
-    for(let i = 1; i < this.length; i++) 
-    {
-      this.snake.push({
-        x: snake.snake[i - 1].x - 10,
-        y: snake.snake[i - 1].y
-      });
-    }
+  updatePosition() {
+    this.updateTailPosition();
+    this.updateHeadPosition();
   }
   
   touchedBorder() {
@@ -77,25 +102,7 @@ class Snake {
         Game.updateScore();
       }
       
-      this.setPositions();
-      
-      switch(key) {
-        case 'RIGHT':
-          this.snake[0].x += this.step;
-          break;
-          
-        case 'LEFT':
-          this.snake[0].x -= this.step;
-          break;
-          
-        case 'UP':
-          this.snake[0].y -= this.step;
-          break;
-          
-        case 'DOWN':
-          this.snake[0].y += this.step;
-          break;
-      }
+      this.updatePosition();
       
       if(this.touchedBorder()) {
         if(this.snake[0].x < 0)
