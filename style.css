@@ -12,8 +12,18 @@ body {
 
 .container {
   position: relative;
-  width: 90vw;
-  height: 90vh;
+  width: 100%;
+}
+
+.mute-unmute-icon {
+  width: inherit;
+  height: inherit;
+}
+
+.mute-unmute-btn {
+  margin: 1%;
+  width: 40px;
+  height: 40px;
 }
 
 button {

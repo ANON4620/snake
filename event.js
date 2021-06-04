@@ -1,4 +1,3 @@
-let state = 'START';
 let key = null;
 
 const rightBtn = document.getElementById('right');
@@ -6,26 +5,28 @@ const leftBtn = document.getElementById('left');
 const upBtn = document.getElementById('up');
 const downBtn = document.getElementById('down');
 
+const mute_unmute_btn = document.getElementById('mute_unmute_btn');
+
 // Functions
 function moveR() {
   if(key !== 'LEFT' && key !== 'RIGHT') {
     key = 'RIGHT';
     turnSound.play();
-    if(state === 'START') {
-      state = 'RUNNING';
+    if(Game.state === 'START') {
+      Game.state = 'RUNNING';
       snake.setInitialPositions();
       snake.move();
     }
   }
 }
 function moveL() {
-  if(key !== 'LEFT' && key !== 'RIGHT' && state !== 'START') {
+  if(key !== 'LEFT' && key !== 'RIGHT' && Game.state !== 'START') {
     key = 'LEFT';
     turnSound.play();
   }
 }
 function moveU() {
-  if(key !== 'UP' && key !== 'DOWN' && state !== 'START') {
+  if(key !== 'UP' && key !== 'DOWN' && Game.state !== 'START') {
     key = 'UP';
     turnSound.play();
   }
@@ -34,8 +35,8 @@ function moveD() {
   if(key !== 'UP' && key !== 'DOWN') {
     key = 'DOWN';
     turnSound.play();
-    if(state === 'START') {
-      state = 'RUNNING';
+    if(Game.state === 'START') {
+      Game.state = 'RUNNING';
       snake.setInitialPositions();
       snake.move();
     }
@@ -73,3 +74,14 @@ function removeAllEventListeners() {
   // for keyboard
   document.removeEventListener('keydown', direction);
 }
+
+
+// Sound events
+function mute_unmute() {
+  if(Game.sound.state === 'MUTE')
+    Game.sound.unmute();
+  else
+    Game.sound.mute();
+}
+
+mute_unmute_btn.addEventListener('click', mute_unmute);

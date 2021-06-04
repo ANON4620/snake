@@ -6,15 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Snake</title>
-  
+
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <center></center>
-  
+  <div class="container">
+    <div id="mute_unmute_btn" class="mute-unmute-btn">
+      <img src="unmute.png" alt="mute-unmute" id="mute_unmute_icon" class="mute-unmute-icon">
+    </div>
+    <center></center>
+  </div>
+
   <noscript>
     Your browser does not support JavaScript!
   </noscript>
@@ -23,8 +28,8 @@
   <script src="audio.js"></script>
   <script src="tap.min.js"></script>
   <script src="body.js"></script>
-  <script src="event.js"></script>
   <script src="game_config.js"></script>
+  <script src="event.js"></script>
   <script src="snake.js"></script>
   <script src="food.js"></script>
   <script src="main.js"></script>
