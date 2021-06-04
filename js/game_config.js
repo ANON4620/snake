@@ -47,7 +47,7 @@ const Game = {
       turnSound.volume = 0;
       eatingSound.volume = 0;
       gameOverSound.volume = 0;
-      mute_unmute_icon.src = 'mute.png';
+      mute_unmute_icon.src = 'icons/mute.png';
       this.state = 'MUTE';
     },
     
@@ -55,7 +55,7 @@ const Game = {
       turnSound.volume = 1;
       eatingSound.volume = 1;
       gameOverSound.volume = 1;
-      mute_unmute_icon.src = 'unmute.png';
+      mute_unmute_icon.src = 'icons/unmute.png';
       this.state = 'UNMUTE';
     }
   }
