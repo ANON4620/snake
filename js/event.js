@@ -14,7 +14,7 @@ function moveR() {
     turnSound.play();
     if(Game.state === 'START') {
       Game.state = 'RUNNING';
-      snake.setInitialPositions();
+      snake.setPosition();
       snake.move();
     }
   }
@@ -37,7 +37,7 @@ function moveD() {
     turnSound.play();
     if(Game.state === 'START') {
       Game.state = 'RUNNING';
-      snake.setInitialPositions();
+      snake.setPosition();
       snake.move();
     }
   }
