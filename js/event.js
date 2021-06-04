@@ -43,7 +43,7 @@ function moveD() {
   }
 }
 
-function direction(event) {
+function keyboardInput(event) {
   if(event.keyCode === 37)
     moveL();
   else if(event.keyCode === 38)
@@ -52,6 +52,8 @@ function direction(event) {
     moveR();
   else if(event.keyCode === 40)
     moveD();
+  else if(event.keyCode === 32)
+    mute_unmute();
 }
 
 // Event listeners
@@ -62,7 +64,7 @@ function addAllEventListeners() {
   downBtn.addEventListener('tap', moveD);
   
   // for keyboard
-  document.addEventListener('keydown', direction);
+  document.addEventListener('keydown', keyboardInput);
 }
 
 function removeAllEventListeners() {
@@ -72,7 +74,7 @@ function removeAllEventListeners() {
   downBtn.removeEventListener('tap', moveD);
   
   // for keyboard
-  document.removeEventListener('keydown', direction);
+  document.removeEventListener('keydown', keyboardInput);
 }
 
 
