@@ -20,7 +20,7 @@ class Snake {
     for(let i = 1; i < this.length; i++)
     {
       this.snake.push({
-        x: snake.snake[i - 1].x - box,
+        x: snake.snake[i - 1].x - this.box,
         y: snake.snake[i - 1].y
       });
     }
