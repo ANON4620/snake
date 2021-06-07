@@ -44,7 +44,7 @@ const Game = {
     state: 'UNMUTE',
     
     mute() {
-      turnSound.volume = 0;
+      keyPress.volume = 0;
       eatingSound.volume = 0;
       gameOverSound.volume = 0;
       mute_unmute_icon.src = 'icons/mute.png';
@@ -52,7 +52,7 @@ const Game = {
     },
     
     unmute() {
-      turnSound.volume = 1;
+      keyPress.volume = 1;
       eatingSound.volume = 1;
       gameOverSound.volume = 1;
       mute_unmute_icon.src = 'icons/unmute.png';

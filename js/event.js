@@ -9,9 +9,9 @@ const mute_unmute_btn = document.getElementById('mute_unmute_btn');
 
 // Functions
 function moveR() {
+  keyPress.play();
   if(key !== 'LEFT' && key !== 'RIGHT') {
     key = 'RIGHT';
-    turnSound.play();
     if(Game.state === 'START') {
       Game.state = 'RUNNING';
       snake.setPosition();
@@ -20,21 +20,21 @@ function moveR() {
   }
 }
 function moveL() {
+  keyPress.play();
   if(key !== 'LEFT' && key !== 'RIGHT' && Game.state !== 'START') {
     key = 'LEFT';
-    turnSound.play();
   }
 }
 function moveU() {
+  keyPress.play();
   if(key !== 'UP' && key !== 'DOWN' && Game.state !== 'START') {
     key = 'UP';
-    turnSound.play();
   }
 }
 function moveD() {
+  keyPress.play();
   if(key !== 'UP' && key !== 'DOWN') {
     key = 'DOWN';
-    turnSound.play();
     if(Game.state === 'START') {
       Game.state = 'RUNNING';
       snake.setPosition();
