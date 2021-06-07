@@ -4,7 +4,7 @@ document.querySelector('center').innerHTML =
   <p id="score">SCORE: 0</p>
   <h1>SNAKE</h1>
   
-  <button id="up" class="controller" style="margin: 8px">Up</button><br>
+  <button id="up" class="controller" style="margin: 5px">Up</button><br>
   <button id="left" class="controller">Left</button>
   <button id="down" class="controller">Down</button>
   <button id="right" class="controller">Right</button>
