@@ -1,4 +1,4 @@
-const delayPerFrame = 150; // milliseconds
+const delay_per_frame = 150; // milliseconds
 
 class Snake {
   constructor(x, y, box, length) {
@@ -17,12 +17,28 @@ class Snake {
   }
   
   setPosition() {
-    for(let i = 1; i < this.length; i++)
+    for(let i = 1; i < this.length; i++) 
     {
-      this.snake.push({
-        x: snake.snake[i - 1].x - this.box,
-        y: snake.snake[i - 1].y
-      });
+      if(key === 'RIGHT' || key === 'DOWN') {
+        this.snake.push({
+          x: this.snake[i - 1].x - this.box,
+          y: this.snake[i - 1].y
+        });
+      }
+      else if(key === 'LEFT')
+      {
+        this.snake.push({
+          x: this.snake[i - 1].x + this.box,
+          y: this.snake[i - 1].y
+        });
+      }
+      else
+      {
+        this.snake.push({
+          x: this.snake[i - 1].x,
+          y: this.snake[i - 1].y + this.box
+        });
+      }
     }
   }
   
@@ -95,8 +111,8 @@ class Snake {
         this.length++;
         for(let i = this.length - 1; i > 0; i--) {
           this.snake.push({
-            x: snake.snake[i - 1].x,
-            y: snake.snake[i - 1].y
+            x: this.snake[i - 1].x,
+            y: this.snake[i - 1].y
           });
         }
         Game.updateScore();
@@ -120,7 +136,7 @@ class Snake {
         Game.over();
       }
       
-    }, delayPerFrame); // setInterval
+    }, delay_per_frame); // setInterval
   } // move() function
 } // class Snake
 

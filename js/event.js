@@ -1,4 +1,5 @@
 let key = null;
+let x = null, y = null; // For snake object
 
 const rightBtn = document.getElementById('right');
 const leftBtn = document.getElementById('left');
@@ -13,6 +14,9 @@ function moveR() {
     key = 'RIGHT';
     turnSound.play();
     if(Game.state === 'START') {
+      x = 0;
+      y = 0;
+      createObjects();
       Game.state = 'RUNNING';
       snake.setPosition();
       snake.move();
@@ -20,15 +24,31 @@ function moveR() {
   }
 }
 function moveL() {
-  if(key !== 'LEFT' && key !== 'RIGHT' && Game.state !== 'START') {
+  if(key !== 'LEFT' && key !== 'RIGHT') {
     key = 'LEFT';
     turnSound.play();
+    if(Game.state === 'START') {
+      x = canvas.width - 10;
+      y = 0;
+      createObjects();
+      Game.state = 'RUNNING';
+      snake.setPosition();
+      snake.move();
+    }
   }
 }
 function moveU() {
-  if(key !== 'UP' && key !== 'DOWN' && Game.state !== 'START') {
+  if(key !== 'UP' && key !== 'DOWN') {
     key = 'UP';
     turnSound.play();
+    if(Game.state === 'START') {
+      x = canvas.width - 10;
+      y = canvas.height - 10;
+      createObjects();
+      Game.state = 'RUNNING';
+      snake.setPosition();
+      snake.move();
+    }
   }
 }
 function moveD() {
@@ -36,6 +56,9 @@ function moveD() {
     key = 'DOWN';
     turnSound.play();
     if(Game.state === 'START') {
+      x = 0;
+      y = 0;
+      createObjects();
       Game.state = 'RUNNING';
       snake.setPosition();
       snake.move();

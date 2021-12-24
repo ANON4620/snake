@@ -9,7 +9,7 @@ document.querySelector('center').innerHTML =
   <button id="down" class="controller">Down</button>
   <button id="right" class="controller">Right</button>
     
-  <h6>Press Right or Down to Start</h6>
+  <h6>Press any key to Start</h6>
     
   <b>CREDITS:</b><br>
   <b>Swarnadeep Sarkar</b>
