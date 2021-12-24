@@ -5,7 +5,6 @@ class Snake {
     this.box = box;
     this.snake = [{ x: x, y: y }];
     this.length = length;
-    this.step = 10;
   }
   
   draw() {
@@ -45,19 +44,19 @@ class Snake {
   updateHeadPosition() {
     switch(key) {
       case 'RIGHT':
-        this.snake[0].x += this.step;
+        this.snake[0].x += this.box;
         break;
     
       case 'LEFT':
-        this.snake[0].x -= this.step;
+        this.snake[0].x -= this.box;
         break;
     
       case 'UP':
-        this.snake[0].y -= this.step;
+        this.snake[0].y -= this.box;
         break;
     
       case 'DOWN':
-        this.snake[0].y += this.step;
+        this.snake[0].y += this.box;
         break;
     }
   }
@@ -78,8 +77,8 @@ class Snake {
     if(
       (this.snake[0].x < 0) ||
       (this.snake[0].y < 0) ||
-      (this.snake[0].x > canvas.width - 10) ||
-      (this.snake[0].y > canvas.height - 10)
+      (this.snake[0].x > canvas.width - this.box) ||
+      (this.snake[0].y > canvas.height - this.box)
       ) 
       return true;
     else
@@ -122,12 +121,12 @@ class Snake {
       
       if(this.touchedBorder()) {
         if(this.snake[0].x < 0)
-          this.snake[0].x = canvas.width - 10;
+          this.snake[0].x = canvas.width - this.box;
         else if(this.snake[0].y < 0)
-          this.snake[0].y = canvas.height - 10;
-        else if(this.snake[0].x > canvas.width - 10)
+          this.snake[0].y = canvas.height - this.box;
+        else if(this.snake[0].x > canvas.width - this.box)
           this.snake[0].x = 0;
-        else if(this.snake[0].y > canvas.height - 10)
+        else if(this.snake[0].y > canvas.height - this.box)
           this.snake[0].y = 0;
       }
       

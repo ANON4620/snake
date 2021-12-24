@@ -1,7 +1,8 @@
 let snake, food;
+const box = 10, length = 3;
 
 function createObjects() {
-  snake = new Snake(x, y, 10, 3);
+  snake = new Snake(x, y, box, length);
   food = new Food();
 }
 

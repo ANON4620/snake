@@ -28,7 +28,7 @@ function moveL() {
     key = 'LEFT';
     turnSound.play();
     if(Game.state === 'START') {
-      x = canvas.width - 10;
+      x = canvas.width - box;
       y = 0;
       createObjects();
       Game.state = 'RUNNING';
@@ -42,8 +42,8 @@ function moveU() {
     key = 'UP';
     turnSound.play();
     if(Game.state === 'START') {
-      x = canvas.width - 10;
-      y = canvas.height - 10;
+      x = canvas.width - box;
+      y = canvas.height - box;
       createObjects();
       Game.state = 'RUNNING';
       snake.setPosition();

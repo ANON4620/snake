@@ -12,8 +12,8 @@ class Food {
   }
 
   changePosition() {
-    this.x = parseInt(((Math.random() * (canvas.width - 10)) + 1) / 10) * 10;
-    this.y = parseInt(((Math.random() * (canvas.height - 10)) + 1) / 10) * 10;
+    this.x = parseInt(((Math.random() * (canvas.width - this.box)) + 1) / this.box) * this.box;
+    this.y = parseInt(((Math.random() * (canvas.height - this.box)) + 1) / this.box) * this.box;
   }
 
   hasEaten() {
