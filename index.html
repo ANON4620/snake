@@ -18,21 +18,32 @@
       <!-- icons8 -->
       <img src="icons/unmute.png" alt="mute-unmute" id="mute_unmute_icon" class="mute-unmute-icon">
     </div>
-    <center></center>
+    
+    <center>
+      <canvas id="canvas" width="200" height="200" style="border: 1px solid black"></canvas>
+      <p id="score">SCORE: 0</p>
+      <h1>SNAKE</h1>
+      
+      <button id="up" class="controller" style="margin: 5px">Up</button><br>
+      <button id="left" class="controller">Left</button>
+      <button id="down" class="controller">Down</button>
+      <button id="right" class="controller">Right</button>
+      
+      <h6>Press any key to Start</h6>
+      
+      <b>CREDITS:</b><br>
+      <b>Swarnadeep Sarkar</b>
+      <b>(ANON4620)</b>
+    </center>
   </div>
 
   <noscript>
     Your browser does not support JavaScript!
   </noscript>
+  
   <!-- SCRIPTS -->
-  <script src="js/loading.js"></script>
   <script src="js/audio.js"></script>
-  <script src="js/tap.min.js"></script>
-  <script src="js/body.js"></script>
-  <script src="js/game_config.js"></script>
+  <script src="js/object.js"></script>
   <script src="js/event.js"></script>
-  <script src="js/snake.js"></script>
-  <script src="js/food.js"></script>
-  <script src="js/main.js"></script>
 </body>
 </html>

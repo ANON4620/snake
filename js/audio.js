@@ -1,4 +1,4 @@
 // Loading audio
-const gameOverSound = new Audio('./Sounds/game-over.wav');
-const eatingSound = new Audio('./Sounds/eating.wav');
-const turnSound = new Audio('./Sounds/turn.wav');
+const gameOverSound = new Audio('./sounds/game-over.wav');
+const eatingSound = new Audio('./sounds/eating.wav');
+const turnSound = new Audio('./sounds/turn.wav');

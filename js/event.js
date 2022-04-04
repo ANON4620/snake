@@ -1,25 +1,32 @@
 let key = null;
-let x = null, y = null; // For snake object
+let snake, food;
+
+// for snake object
+let x = null, y = null;
+const box = 10, length = 3;
 
 const rightBtn = document.getElementById('right');
 const leftBtn = document.getElementById('left');
 const upBtn = document.getElementById('up');
 const downBtn = document.getElementById('down');
-
 const mute_unmute_btn = document.getElementById('mute_unmute_btn');
 
 // Functions
+
+function createObjects() {
+	snake = new Snake(x, y, box, length);
+	food = new Food();
+}
+
 function moveR() {
   if(key !== 'LEFT' && key !== 'RIGHT') {
     key = 'RIGHT';
     turnSound.play();
-    if(Game.state === 'START') {
+    if(game.state === 'START') {
       x = 0;
       y = 0;
       createObjects();
-      Game.state = 'RUNNING';
-      snake.setPosition();
-      snake.move();
+      game.state = 'RUNNING';
     }
   }
 }
@@ -27,13 +34,11 @@ function moveL() {
   if(key !== 'LEFT' && key !== 'RIGHT') {
     key = 'LEFT';
     turnSound.play();
-    if(Game.state === 'START') {
+    if(game.state === 'START') {
       x = canvas.width - box;
       y = 0;
       createObjects();
-      Game.state = 'RUNNING';
-      snake.setPosition();
-      snake.move();
+      game.state = 'RUNNING';
     }
   }
 }
@@ -41,13 +46,11 @@ function moveU() {
   if(key !== 'UP' && key !== 'DOWN') {
     key = 'UP';
     turnSound.play();
-    if(Game.state === 'START') {
+    if(game.state === 'START') {
       x = canvas.width - box;
       y = canvas.height - box;
       createObjects();
-      Game.state = 'RUNNING';
-      snake.setPosition();
-      snake.move();
+      game.state = 'RUNNING';
     }
   }
 }
@@ -55,13 +58,11 @@ function moveD() {
   if(key !== 'UP' && key !== 'DOWN') {
     key = 'DOWN';
     turnSound.play();
-    if(Game.state === 'START') {
+    if(game.state === 'START') {
       x = 0;
       y = 0;
       createObjects();
-      Game.state = 'RUNNING';
-      snake.setPosition();
-      snake.move();
+      game.state = 'RUNNING';
     }
   }
 }
@@ -80,33 +81,18 @@ function keyboardInput(event) {
 }
 
 // Event listeners
-function addAllEventListeners() {
-  rightBtn.addEventListener('tap', moveR);
-  leftBtn.addEventListener('tap', moveL);
-  upBtn.addEventListener('tap', moveU);
-  downBtn.addEventListener('tap', moveD);
+rightBtn.addEventListener('click', moveR);
+leftBtn.addEventListener('click', moveL);
+upBtn.addEventListener('click', moveU);
+downBtn.addEventListener('click', moveD);
   
-  // for keyboard
-  document.addEventListener('keydown', keyboardInput);
-}
-
-function removeAllEventListeners() {
-  rightBtn.removeEventListener('tap', moveR);
-  leftBtn.removeEventListener('tap', moveL);
-  upBtn.removeEventListener('tap', moveU);
-  downBtn.removeEventListener('tap', moveD);
+// for keyboard
+document.addEventListener('keydown', keyboardInput);
   
-  // for keyboard
-  document.removeEventListener('keydown', keyboardInput);
-}
-
-
 // Sound events
-function mute_unmute() {
-  if(Game.sound.state === 'MUTE')
-    Game.sound.unmute();
+mute_unmute_btn.addEventListener('click', () => {
+  if(game.sound.state === 'MUTE')
+    game.sound.unmute();
   else
-    Game.sound.mute();
-}
-
-mute_unmute_btn.addEventListener('click', mute_unmute);
+    game.sound.mute();
+});
