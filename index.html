@@ -6,18 +6,17 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
 
   <title>Snake</title>
-
-
+	
+	<!-- Favicon -->
+	<link rel="icon" type="image/x-icon" href="./icons/favicon.ico">
+	
   <!-- Custom Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="container">
-    <div id="mute_unmute_btn" class="mute-unmute-btn">
-      <!-- icons8 -->
-      <img src="icons/unmute.png" alt="mute-unmute" id="mute_unmute_icon" class="mute-unmute-icon">
-    </div>
+    <button id="mute-unmute-btn" class="unmute"></button>
     
     <center>
       <canvas id="canvas" width="200" height="200" style="border: 1px solid black"></canvas>
@@ -42,8 +41,8 @@
   </noscript>
   
   <!-- SCRIPTS -->
-  <script src="js/audio.js"></script>
-  <script src="js/object.js"></script>
-  <script src="js/event.js"></script>
+  <script src="./js/audio.js"></script>
+  <script src="./js/object.js"></script>
+  <script src="./js/event.js"></script>
 </body>
 </html>

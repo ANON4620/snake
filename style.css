@@ -1,13 +1,24 @@
 @font-face {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-display: swap;
-  src: url('Lato-Regular.ttf');
+  src: url("Lato-Regular.ttf");
 }
 
 body {
   font-size: 15pt;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   background-color: white;
+  
+  /* disable pull-to-refresh */
+  overscroll-behavior: contain;
+  
+  /* disable long press/touch to select text */
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 
 .container {
@@ -15,15 +26,21 @@ body {
   width: 100%;
 }
 
-.mute-unmute-icon {
-  width: inherit;
-  height: inherit;
-}
-
-.mute-unmute-btn {
+#mute-unmute-btn {
   margin: 2%;
   width: 35px;
   height: 35px;
+  border: none;
+  background-color: white;
+  background-size: cover;
+}
+
+.mute {
+	background-image: url("./icons/mute.png");
+}
+
+.unmute {
+	background-image: url("./icons/unmute.png");
 }
 
 .controller {
@@ -33,7 +50,7 @@ body {
   border: none;
   border: 2px solid black;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 0 5px #999;
   font-size: 12pt;
   font-weight: bold;
   text-align: center;
@@ -44,7 +61,8 @@ body {
   outline: none;
 }
 
+
 .controller:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
+  box-shadow: 0 4px #666;
+  transform: translateY(1px);
 }

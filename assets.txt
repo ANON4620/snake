@@ -1,10 +1,8 @@
-LIBRARIES:
-Tap.js - https://github.com/pukhalski/tap
-
 SOUNDS:
 https://mixkit.co/free-sound-effects/game/
-
 
 ICONS:
 https://icons8.com/icons/set/Audio
 https://icons8.com/icons/set/mute-unmute
+https://favicon.io/emoji-favicons/snake/
+
