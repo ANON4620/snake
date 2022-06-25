@@ -7,41 +7,16 @@ const game = {
   state: "STOP",
   score: 0,
 
-  updateScore() {
-    this.score++;
-    score.innerText = `SCORE: ${this.score}`;
-  },
-
-  over() {
-    gameOverSound.play();
-    setTimeout(() => {
-      this.state = "STOP";
-      alert("Game Over!");
-      this.reset();
-    }, 1200);
-  },
-
-  reset() {
-  	key = null;
-    this.clearCanvas();
-    this.score = 0;
-    score.innerText = `SCORE: ${this.score}`;
-    
-    for(let i = 0; i < snake.length; i++)
-    	snake.tail.pop();
-    
-    snake.length = init_len;
-  },
-
   clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   },
   
   start() {
   	game.state = "RUNNING";
+    snake.setPosition(0, 0);
   	food.changePosition();
   	
-  	const start = setInterval(() => {
+  	const running = setInterval(() => {
   		game.clearCanvas();
   		food.draw();
   		snake.draw();
@@ -55,12 +30,38 @@ const game = {
   		}
   
   		if(snake.hasCollided()) {
-  			clearInterval(start);
+  			clearInterval(running);
   			game.over();
   		}
   	}, 150);
   },
+
+  over() {
+    gameOverSound.play();
+    setTimeout(() => {
+      this.state = "STOP";
+      alert("Game Over!");
+      this.reset();
+    }, 1500);
+  },
+
+  reset() {
+    key = null;
+    this.clearCanvas();
+    this.score = 0;
+    score.innerText = `SCORE: ${this.score}`;
+    
+    for(let i = 0; i < snake.length; i++)
+      snake.tail.pop();
+    
+    snake.length = init_len;
+  },
   
+  updateScore() {
+    this.score++;
+    score.innerText = `SCORE: ${this.score}`;
+  },
+
   sound: {
     state: "UNMUTE",
     
@@ -149,6 +150,7 @@ const snake = {
         (this.tail[0].y === this.tail[i].y))
         return true;
     }
+
     return false;
   },
   
@@ -176,22 +178,25 @@ const food = {
   	
   	for(let x = 0; x < canvas.width - this.box; x += this.box) {
   		for(let y = 0; y < canvas.height - this.box; y += this.box) {
-  			
+
   			let blank_pos = true;
-  			if(this.x === x && this.y === y)
+
+  			if(this.x === x && this.y === y) {
   				blank_pos = false;
+        }
   			else {
   				for(let i = 0; i < snake.length; i++) {
-  					if((snake.tail[i].x === x) &&
-  					(snake.tail[i].y === y)) {
+  					if((snake.tail[i].x === x) && (snake.tail[i].y === y)) {
   						blank_pos = false;
   						break;
   					}
   				}
   			}
-  			if(blank_pos)
-  				arr.push({x: x, y: y});
-  				
+
+  			if(blank_pos) {
+  				arr.push({x: x, y: y});	
+        }
+
   		}
   	}
   	
@@ -201,9 +206,9 @@ const food = {
   },
 
   hasEaten() {
-    if((snake.tail[0].x === food.x) &&
-      (snake.tail[0].y === food.y))
+    if((snake.tail[0].x === food.x) && (snake.tail[0].y === food.y)) {
       return true;
+    }
       
     return false;
   }

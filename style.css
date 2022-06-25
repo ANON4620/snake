@@ -5,6 +5,7 @@
 }
 
 body {
+  margin: 0;
   font-size: 15pt;
   font-family: "Lato", sans-serif;
   background-color: white;
@@ -65,4 +66,9 @@ body {
 .controller:active {
   box-shadow: 0 4px #666;
   transform: translateY(1px);
+}
+
+p {
+  margin: 12px;
+  font-weight: bold;
 }

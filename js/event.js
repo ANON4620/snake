@@ -6,81 +6,70 @@ const upBtn = document.getElementById("up");
 const downBtn = document.getElementById("down");
 const mute_unmute_btn = document.getElementById("mute-unmute-btn");
 
-
-function moveR() {
-  if(key !== "LEFT" && key !== "RIGHT") {
-    key = "RIGHT";
-    turnSound.play();
-    if(game.state === "STOP") {
-      snake.setPosition(-10, 0);
-      game.start();
-    }
+function mute_unmute() {
+  if(game.sound.state === "MUTE") {
+    game.sound.unmute();
   }
-}
-function moveL() {
-  if(key !== "LEFT" && key !== "RIGHT") {
-    key = "LEFT";
-    turnSound.play();
-    if(game.state === "STOP") {
-      snake.setPosition(-10, 0);
-      game.start();
-    }
-  }
-}
-function moveU() {
-  if(key !== "UP" && key !== "DOWN") {
-    key = "UP";
-    turnSound.play();
-    if(game.state === "STOP") {
-      snake.setPosition(0, -10);
-      game.start();
-    }
-  }
-}
-function moveD() {
-  if(key !== "UP" && key !== "DOWN") {
-    key = "DOWN";
-    turnSound.play();
-    if(game.state === "STOP") {
-      snake.setPosition(0, -10);
-      game.start();
-    }
+  else {
+    game.sound.mute();
   }
 }
 
 function keyboardInput(event) {
-  if(event.keyCode === 37)
-    moveL();
-  else if(event.keyCode === 38)
-    moveU();
-  else if(event.keyCode === 39)
-    moveR();
-  else if(event.keyCode === 40)
-    moveD();
-  else if(event.keyCode === 32)
+  if(event.keyCode === 37 && (key !== "LEFT" && key !== "RIGHT")) {
+    key = "LEFT";
+  }
+  else if(event.keyCode === 38 && (key !== "UP" && key !== "DOWN")) {
+    key = "UP";
+  }
+  else if(event.keyCode === 39 && (key !== "LEFT" && key !== "RIGHT")) {
+    key = "RIGHT";
+  }
+  else if(event.keyCode === 40 && (key !== "UP" && key !== "DOWN")) {
+    key = "DOWN";
+  }
+  else if(event.keyCode === 32) {
     mute_unmute();
+  }
+
+  turnSound.play();
+  if(game.state === "STOP") {
+    game.start();
+  }
 }
 
+function touchInput() {
+  if(this.id === "right" && (key !== "LEFT" && key !== "RIGHT")) {
+    key = "RIGHT";
+  }
+  else if(this.id === "left" && (key !== "LEFT" && key !== "RIGHT")) {
+    key = "LEFT";
+  }
+  else if(this.id === "up" && (key !== "UP" && key !== "DOWN")) {
+    key = "UP";
+  }
+  else if(this.id === "down" && (key !== "UP" && key !== "DOWN")) {
+    key = "DOWN";
+  }
 
-if(snake.length <= 0)
+  turnSound.play();
+  if(game.state === "STOP") {
+    game.start();
+  }
+}
+
+if(snake.length <= 0) {
 	console.error("length cannot be less than 1");
+}
 else {
-	
-	// Event listeners
-	rightBtn.addEventListener("touchstart", moveR);
-	leftBtn.addEventListener("touchstart", moveL);
-	upBtn.addEventListener("touchstart", moveU);
-	downBtn.addEventListener("touchstart", moveD);
-  
-	// for keyboard
-	document.addEventListener("keydown", keyboardInput);
-  
-	// Sound events
-	mute_unmute_btn.addEventListener("touchstart", () => {
-  	if(game.sound.state === "MUTE")
-    	game.sound.unmute();
-  	else
-    	game.sound.mute();
-	});
+  // Keyboard listener
+  document.addEventListener("keydown", keyboardInput);
+
+	// Touch listeners
+	rightBtn.addEventListener("touchstart", touchInput);
+	leftBtn.addEventListener("touchstart", touchInput);
+	upBtn.addEventListener("touchstart", touchInput);
+	downBtn.addEventListener("touchstart", touchInput);
+	mute_unmute_btn.addEventListener("touchstart", mute_unmute);
 }
 
