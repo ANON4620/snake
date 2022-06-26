@@ -4,7 +4,6 @@ const rightBtn = document.getElementById("right");
 const leftBtn = document.getElementById("left");
 const upBtn = document.getElementById("up");
 const downBtn = document.getElementById("down");
-const mute_unmute_btn = document.getElementById("mute-unmute-btn");
 
 function mute_unmute() {
   if(game.sound.state === "MUTE") {
@@ -18,24 +17,33 @@ function mute_unmute() {
 function keyboardInput(event) {
   if(event.keyCode === 37 && (key !== "LEFT" && key !== "RIGHT")) {
     key = "LEFT";
+    if(game.state === "STOP") {
+      game.start();
+    }
   }
   else if(event.keyCode === 38 && (key !== "UP" && key !== "DOWN")) {
     key = "UP";
+    if(game.state === "STOP") {
+      game.start();
+    }
   }
   else if(event.keyCode === 39 && (key !== "LEFT" && key !== "RIGHT")) {
     key = "RIGHT";
+    if(game.state === "STOP") {
+      game.start();
+    }
   }
   else if(event.keyCode === 40 && (key !== "UP" && key !== "DOWN")) {
     key = "DOWN";
+    if(game.state === "STOP") {
+      game.start();
+    }
   }
   else if(event.keyCode === 32) {
     mute_unmute();
   }
-
+  
   turnSound.play();
-  if(game.state === "STOP") {
-    game.start();
-  }
 }
 
 function touchInput() {
@@ -59,17 +67,22 @@ function touchInput() {
 }
 
 if(snake.length <= 0) {
-	console.error("length cannot be less than 1");
+  console.error("length cannot be less than 1");
 }
 else {
   // Keyboard listener
   document.addEventListener("keydown", keyboardInput);
 
-	// Touch listeners
-	rightBtn.addEventListener("touchstart", touchInput);
-	leftBtn.addEventListener("touchstart", touchInput);
-	upBtn.addEventListener("touchstart", touchInput);
-	downBtn.addEventListener("touchstart", touchInput);
-	mute_unmute_btn.addEventListener("touchstart", mute_unmute);
+  // Touch listeners
+  rightBtn.addEventListener("touchstart", touchInput);
+  leftBtn.addEventListener("touchstart", touchInput);
+  upBtn.addEventListener("touchstart", touchInput);
+  downBtn.addEventListener("touchstart", touchInput);
+  mute_btn.addEventListener("touchstart", mute_unmute);
+  unmute_btn.addEventListener("touchstart", mute_unmute);
+	
+  // Unmute sound
+  game.sound.unmute();
 }
+
 

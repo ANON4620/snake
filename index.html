@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
 
   <title>Snake</title>
@@ -10,27 +9,27 @@
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">
 	
-  <!-- Custom Styles -->
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="container">
-    <button id="mute-unmute-btn" class="unmute"></button>
+    <img id="mute-btn" class="mute-unmute-btn" src="./icons/mute.png"></img>
+    <img id="unmute-btn" class="mute-unmute-btn" src="./icons/unmute.png"></img>
     
     <center>
-      <canvas id="canvas" width="200" height="200" style="border: 1px solid black">
+      <canvas id="canvas" width="300" height="300" style="border: 1px solid black">
         You are running an outdated browser!
       </canvas>
-      <p id="score">SCORE: 0</p>
+      <p id="score" style="margin: 10px">SCORE: 0</p>
 
       <button id="up" class="controller" style="margin: 5px">Up</button><br>
       <button id="left" class="controller">Left</button>
       <button id="down" class="controller">Down</button>
       <button id="right" class="controller">Right</button>
       
-      <p>CREDITS:</p>
-      <p>Swarnadeep Sarkar (ANON4620)</p>
+      <p class="credits" style="margin-top: 20px">Developer: Swarnadeep Sarkar (ANON4620)</p>
     </center>
   </div>
 
@@ -44,3 +43,4 @@
   <script src="./js/event.js"></script>
 </body>
 </html>
+

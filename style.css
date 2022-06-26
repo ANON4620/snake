@@ -27,21 +27,13 @@ body {
   width: 100%;
 }
 
-#mute-unmute-btn {
-  margin: 2%;
+.mute-unmute-btn {
+  margin: 10px;
   width: 35px;
   height: 35px;
   border: none;
   background-color: white;
   background-size: cover;
-}
-
-.mute {
-	background-image: url("./icons/mute.png");
-}
-
-.unmute {
-	background-image: url("./icons/unmute.png");
 }
 
 .controller {
@@ -55,8 +47,8 @@ body {
   font-size: 12pt;
   font-weight: bold;
   text-align: center;
-  height: 50px;
-  width: 50px;
+  height: 80px;
+  width: 80px;
   padding: 0px;
   margin: 1px;
   outline: none;
@@ -69,6 +61,10 @@ body {
 }
 
 p {
-  margin: 12px;
   font-weight: bold;
 }
+
+.credits {
+  font-size: 12px;
+}
+

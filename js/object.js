@@ -1,7 +1,8 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const score = document.getElementById("score");
-const mute_unmute_icon = document.getElementById("mute_unmute_icon");
+const mute_btn = document.getElementById("mute-btn");
+const unmute_btn = document.getElementById("unmute-btn");
 
 const game = {
   state: "STOP",
@@ -12,28 +13,28 @@ const game = {
   },
   
   start() {
-  	game.state = "RUNNING";
+    game.state = "RUNNING";
     snake.setPosition(0, 0);
-  	food.changePosition();
+    food.changePosition();
   	
-  	const running = setInterval(() => {
-  		game.clearCanvas();
-  		food.draw();
-  		snake.draw();
-  		snake.move();
+    const running = setInterval(() => {
+  	game.clearCanvas();
+  	food.draw();
+  	snake.draw();
+  	snake.move();
   
-  		if(food.hasEaten()) {
-  			eatingSound.play();
-  			game.updateScore();
-  			snake.addTail();
-  			food.changePosition();
-  		}
+  	if(food.hasEaten()) {
+  		eatingSound.play();
+  		game.updateScore();
+  		snake.addTail();
+  		food.changePosition();
+  	}
   
-  		if(snake.hasCollided()) {
-  			clearInterval(running);
-  			game.over();
-  		}
-  	}, 150);
+  	if(snake.hasCollided()) {
+  		clearInterval(running);
+  		game.over();
+  	}
+    }, 150);
   },
 
   over() {
@@ -47,12 +48,13 @@ const game = {
 
   reset() {
     key = null;
-    this.clearCanvas();
     this.score = 0;
     score.innerText = `SCORE: ${this.score}`;
+    this.clearCanvas();
     
-    for(let i = 0; i < snake.length; i++)
+    for(let i = 0; i < snake.length; i++) {
       snake.tail.pop();
+    }
     
     snake.length = init_len;
   },
@@ -69,7 +71,8 @@ const game = {
       turnSound.volume = 0;
       eatingSound.volume = 0;
       gameOverSound.volume = 0;
-      mute_unmute_btn.className = "mute";
+      unmute_btn.style.display = "none";
+      mute_btn.style.display = "inline";
       this.state = "MUTE";
     },
     
@@ -77,7 +80,8 @@ const game = {
       turnSound.volume = 1;
       eatingSound.volume = 1;
       gameOverSound.volume = 1;
-      mute_unmute_btn.className = "unmute";
+      mute_btn.style.display = "none";
+      unmute_btn.style.display = "inline";
       this.state = "UNMUTE";
     }
   }
@@ -86,13 +90,13 @@ const game = {
 
 const init_len = 3;
 const snake = {
- 	box: 10,
- 	tail: [],
- 	length: init_len,
+  box: 10,
+  tail: [],
+  length: init_len,
  	
   draw() {
+    ctx.fillStyle = "Black";
     for(let i = this.length - 1; i > 0; i--) {
-      ctx.fillStyle = "Black";
       ctx.fillRect(this.tail[i].x, this.tail[i].y, this.box, this.box);
     }
     
@@ -147,26 +151,27 @@ const snake = {
     for(let i = 1; i < this.length; i++) 
     {
       if((this.tail[0].x === this.tail[i].x) && 
-        (this.tail[0].y === this.tail[i].y))
+        (this.tail[0].y === this.tail[i].y)) {
         return true;
+      }
     }
 
     return false;
   },
   
   addTail() {
-  	this.tail.push({
-  		x: this.tail[this.length - 1].x,
-  		y: this.tail[this.length - 1].y
-  	});
-  	this.length++;
+    this.tail.push({
+      x: this.tail[this.length - 1].x,
+      y: this.tail[this.length - 1].y
+    });
+    this.length++;
   }
 };
 
 const food = {
-	x: null,
-	y: null,
-	box: snake.box,
+  x: null,
+  y: null,
+  box: snake.box,
 	
   draw() {
     ctx.fillStyle = "Red";
@@ -174,35 +179,35 @@ const food = {
   },
 
   changePosition() {
-  	const arr = [];
+    const arr = [];
   	
-  	for(let x = 0; x < canvas.width - this.box; x += this.box) {
-  		for(let y = 0; y < canvas.height - this.box; y += this.box) {
+    for(let x = 0; x < canvas.width - this.box; x += this.box) {
+  	for(let y = 0; y < canvas.height - this.box; y += this.box) {
 
-  			let blank_pos = true;
+		let empty_area = true;
 
-  			if(this.x === x && this.y === y) {
-  				blank_pos = false;
-        }
-  			else {
-  				for(let i = 0; i < snake.length; i++) {
-  					if((snake.tail[i].x === x) && (snake.tail[i].y === y)) {
-  						blank_pos = false;
-  						break;
-  					}
+  		if(this.x === x && this.y === y) {
+  			empty_area = false;
+        	}
+  		else {
+  			for(let i = 0; i < snake.length; i++) {
+  				if((snake.tail[i].x === x) && (snake.tail[i].y === y)) {
+  					empty_area = false;
+  					break;
   				}
   			}
-
-  			if(blank_pos) {
-  				arr.push({x: x, y: y});	
-        }
-
   		}
+
+  		if(empty_area) {
+  			arr.push({x: x, y: y});	
+        	}
+
   	}
+    }
   	
-  	const random = parseInt(Math.random() * arr.length);
-  	this.x = arr[random].x;
-  	this.y = arr[random].y;
+    const random = parseInt(Math.random() * arr.length);
+    this.x = arr[random].x;
+    this.y = arr[random].y;
   },
 
   hasEaten() {
@@ -213,3 +218,5 @@ const food = {
     return false;
   }
 };
+
+
