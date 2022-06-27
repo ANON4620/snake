@@ -90,7 +90,7 @@ const game = {
 
 const init_len = 3;
 const snake = {
-  box: 10,
+  box: 15,
   tail: [],
   length: init_len,
  	

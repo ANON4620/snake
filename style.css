@@ -22,15 +22,10 @@ body {
   user-select:none;
 }
 
-.container {
-  position: relative;
-  width: 100%;
-}
-
 .mute-unmute-btn {
-  margin: 10px;
-  width: 35px;
-  height: 35px;
+  margin: 3%;
+  width: 10vw;
+  height: 5vh;
   border: none;
   background-color: white;
   background-size: cover;
@@ -47,10 +42,9 @@ body {
   font-size: 12pt;
   font-weight: bold;
   text-align: center;
-  height: 80px;
-  width: 80px;
-  padding: 0px;
-  margin: 1px;
+  height: 12vh;
+  width: 22vw;
+  margin: 0.1%;
   outline: none;
 }
 
@@ -64,7 +58,8 @@ p {
   font-weight: bold;
 }
 
-.credits {
-  font-size: 12px;
+#credits {
+  font-size: 10pt;
+  margin-top: 5%;
 }
 
