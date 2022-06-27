@@ -6,7 +6,6 @@
 
 body {
   margin: 0;
-  font-size: 15pt;
   font-family: "Lato", sans-serif;
   background-color: white;
   
@@ -58,8 +57,13 @@ p {
   font-weight: bold;
 }
 
+#score {
+  font-size: 15pt;
+  margin: 4%;
+}
+
 #credits {
-  font-size: 5pt;
+  font-size: 10pt;
   margin-top: 5%;
 }
 
