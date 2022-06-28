@@ -13,37 +13,41 @@ const game = {
   },
   
   start() {
-    game.state = "RUNNING";
-    snake.setPosition(0, 0);
-    food.changePosition();
+  	game.state = "RUNNING";
+	snake.setPosition(0, 0);
+  	food.changePosition();
   	
-    const running = setInterval(() => {
-  	game.clearCanvas();
-  	food.draw();
-  	snake.draw();
-  	snake.move();
+  	const running = setInterval(() => {
+  		game.clearCanvas();
+  		food.draw();
+  		snake.draw();
+  		snake.move();
   
-  	if(food.hasEaten()) {
-  		eatingSound.play();
-  		game.updateScore();
-  		snake.addTail();
-  		food.changePosition();
-  	}
+  		if(food.hasEaten()) {
+  		  eatingSound.pause();
+  		  eatingSound.currentTime = 0;
+  		  eatingSound.play();
+  		  game.updateScore();
+  		  snake.addTail();
+  		  food.changePosition();
+  		}
   
-  	if(snake.hasCollided()) {
-  		clearInterval(running);
-  		game.over();
-  	}
-    }, 150);
+  		if(snake.hasCollided()) {
+  			clearInterval(running);
+  			game.over();
+  		}
+  	}, 150);
   },
 
   over() {
+    gameOverSound.pause();
+    gameOverSound.currentTime = 0;
     gameOverSound.play();
     setTimeout(() => {
       this.state = "STOP";
       alert("Game Over!");
       this.reset();
-    }, 1500);
+    }, 1300);
   },
 
   reset() {
@@ -120,6 +124,7 @@ const snake = {
       this.tail[i].y = this.tail[i - 1].y;
     }
     
+    
     switch(key) {
     	case "RIGHT":
     		this.tail[0].x += this.box;
@@ -145,6 +150,7 @@ const snake = {
     			this.tail[0].y = 0;
     		break;
     }
+    
   },
   
   hasCollided() {
@@ -153,25 +159,25 @@ const snake = {
       if((this.tail[0].x === this.tail[i].x) && 
         (this.tail[0].y === this.tail[i].y)) {
         return true;
-      }
+        }
     }
 
     return false;
   },
   
   addTail() {
-    this.tail.push({
-      x: this.tail[this.length - 1].x,
-      y: this.tail[this.length - 1].y
-    });
-    this.length++;
+  	this.tail.push({
+  		x: this.tail[this.length - 1].x,
+  		y: this.tail[this.length - 1].y
+  	});
+  	this.length++;
   }
 };
 
 const food = {
-  x: null,
-  y: null,
-  box: snake.box,
+	x: null,
+	y: null,
+	box: snake.box,
 	
   draw() {
     ctx.fillStyle = "Red";
@@ -179,35 +185,35 @@ const food = {
   },
 
   changePosition() {
-    const arr = [];
+  	const arr = [];
   	
-    for(let x = 0; x < canvas.width - this.box; x += this.box) {
-  	for(let y = 0; y < canvas.height - this.box; y += this.box) {
+  	for(let x = 0; x < canvas.width - this.box; x += this.box) {
+  		for(let y = 0; y < canvas.height - this.box; y += this.box) {
 
-		let empty_area = true;
+  			let empty_area = true;
 
-  		if(this.x === x && this.y === y) {
-  			empty_area = false;
-        	}
-  		else {
-  			for(let i = 0; i < snake.length; i++) {
-  				if((snake.tail[i].x === x) && (snake.tail[i].y === y)) {
-  					empty_area = false;
-  					break;
+  			if(this.x === x && this.y === y) {
+  				empty_area = false;
+        		}
+  			else {
+  				for(let i = 0; i < snake.length; i++) {
+  					if((snake.tail[i].x === x) && (snake.tail[i].y === y)) {
+  						empty_area = false;
+  						break;
+  					}
   				}
   			}
+
+  			if(empty_area) {
+  				arr.push({x: x, y: y});	
+        		}
+
   		}
-
-  		if(empty_area) {
-  			arr.push({x: x, y: y});	
-        	}
-
   	}
-    }
   	
-    const random = parseInt(Math.random() * arr.length);
-    this.x = arr[random].x;
-    this.y = arr[random].y;
+  	const random = parseInt(Math.random() * arr.length);
+  	this.x = arr[random].x;
+  	this.y = arr[random].y;
   },
 
   hasEaten() {

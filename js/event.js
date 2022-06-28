@@ -43,6 +43,8 @@ function keyboardInput(event) {
     mute_unmute();
   }
   
+  turnSound.pause();
+  turnSound.currentTime = 0;
   turnSound.play();
 }
 
@@ -59,7 +61,9 @@ function touchInput() {
   else if(this.id === "down" && (key !== "UP" && key !== "DOWN")) {
     key = "DOWN";
   }
-
+  
+  turnSound.pause();
+  turnSound.currentTime = 0;
   turnSound.play();
   if(game.state === "STOP") {
     game.start();
@@ -67,7 +71,7 @@ function touchInput() {
 }
 
 if(snake.length <= 0) {
-  console.error("length cannot be less than 1");
+	console.error("length cannot be less than 1");
 }
 else {
   // Keyboard listener
