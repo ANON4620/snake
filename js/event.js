@@ -1,4 +1,5 @@
-let key = null;
+let key = null
+const keyBuffer = [];
 
 const rightBtn = document.getElementById("right");
 const leftBtn = document.getElementById("left");
@@ -15,26 +16,28 @@ function mute_unmute() {
 }
 
 function keyboardInput(event) {
-  if(event.keyCode === 37 && (key !== "LEFT" && key !== "RIGHT")) {
-    key = "LEFT";
+  const lastKey = keyBuffer[keyBuffer.length - 1];
+  
+  if(event.keyCode === 37 && key !== "RIGHT" && lastKey !== "LEFT") {
+    keyBuffer.push("LEFT");
     if(game.state === "STOP") {
       game.start();
     }
   }
-  else if(event.keyCode === 38 && (key !== "UP" && key !== "DOWN")) {
-    key = "UP";
+  else if(event.keyCode === 38 && key !== "DOWN" && lastKey !== "UP") {
+    keyBuffer.push("UP");
     if(game.state === "STOP") {
       game.start();
     }
   }
-  else if(event.keyCode === 39 && (key !== "LEFT" && key !== "RIGHT")) {
-    key = "RIGHT";
+  else if(event.keyCode === 39 && key !== "LEFT" && lastKey !== "RIGHT") {
+    keyBuffer.push("RIGHT");
     if(game.state === "STOP") {
       game.start();
     }
   }
-  else if(event.keyCode === 40 && (key !== "UP" && key !== "DOWN")) {
-    key = "DOWN";
+  else if(event.keyCode === 40 && key !== "UP" && lastKey !== "DOWN") {
+    keyBuffer.push("DOWN");
     if(game.state === "STOP") {
       game.start();
     }
@@ -49,17 +52,11 @@ function keyboardInput(event) {
 }
 
 function touchInput() {
-  if(this.id === "right" && (key !== "LEFT" && key !== "RIGHT")) {
-    key = "RIGHT";
-  }
-  else if(this.id === "left" && (key !== "LEFT" && key !== "RIGHT")) {
-    key = "LEFT";
-  }
-  else if(this.id === "up" && (key !== "UP" && key !== "DOWN")) {
-    key = "UP";
-  }
-  else if(this.id === "down" && (key !== "UP" && key !== "DOWN")) {
-    key = "DOWN";
+  const temp = (this.id).toUpperCase();
+  const lastKey = keyBuffer[keyBuffer.length - 1];
+  
+  if((temp !== lastKey) && ((temp === "RIGHT" && key !== "LEFT") || (temp === "LEFT" && key !== "RIGHT") || (temp === "UP" && key !== "DOWN") || (temp === "DOWN" && key !== "UP"))) {
+      keyBuffer.push(temp);
   }
   
   turnSound.pause();
@@ -76,7 +73,7 @@ if(snake.length <= 0) {
 else {
   // Keyboard listener
   document.addEventListener("keydown", keyboardInput);
-
+  
   // Touch listeners
   rightBtn.addEventListener("touchstart", touchInput);
   leftBtn.addEventListener("touchstart", touchInput);

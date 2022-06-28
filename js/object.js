@@ -11,7 +11,12 @@ const game = {
   clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   },
-  
+ 
+  input() {
+    if(keyBuffer.length > 0)
+      key = keyBuffer.shift();
+  },
+
   start() {
   	game.state = "RUNNING";
 	snake.setPosition(0, 0);
@@ -21,6 +26,7 @@ const game = {
   		game.clearCanvas();
   		food.draw();
   		snake.draw();
+		game.input();
   		snake.move();
   
   		if(food.hasEaten()) {
