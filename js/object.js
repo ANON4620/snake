@@ -58,15 +58,12 @@ const game = {
 
   reset() {
     key = null;
+    keyBuffer = [];
+    this.clearCanvas();
+    snake.tail = [];
+    snake.length = init_len;
     this.score = 0;
     score.innerText = `SCORE: ${this.score}`;
-    this.clearCanvas();
-    
-    for(let i = 0; i < snake.length; i++) {
-      snake.tail.pop();
-    }
-    
-    snake.length = init_len;
   },
   
   updateScore() {
