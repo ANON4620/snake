@@ -1,5 +1,5 @@
 let key = null
-const keyBuffer = [];
+let keyBuffer = [];
 
 const rightBtn = document.getElementById("right");
 const leftBtn = document.getElementById("left");
