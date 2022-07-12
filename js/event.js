@@ -1,4 +1,4 @@
-let key = null
+let key = null;
 let keyBuffer = [];
 
 const rightBtn = document.getElementById("right");
