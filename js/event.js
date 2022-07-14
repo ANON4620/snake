@@ -15,47 +15,11 @@ function mute_unmute() {
   }
 }
 
-function keyboardInput(event) {
-  const lastKey = keyBuffer[keyBuffer.length - 1];
-  
-  if(event.keyCode === 37 && lastKey !== "RIGHT" && lastKey !== "LEFT") {
-    keyBuffer.push("LEFT");
-    if(game.state === "STOP") {
-      game.start();
-    }
-  }
-  else if(event.keyCode === 38 && lastKey !== "DOWN" && lastKey !== "UP") {
-    keyBuffer.push("UP");
-    if(game.state === "STOP") {
-      game.start();
-    }
-  }
-  else if(event.keyCode === 39 && lastKey !== "LEFT" && lastKey !== "RIGHT") {
-    keyBuffer.push("RIGHT");
-    if(game.state === "STOP") {
-      game.start();
-    }
-  }
-  else if(event.keyCode === 40 && lastKey !== "UP" && lastKey !== "DOWN") {
-    keyBuffer.push("DOWN");
-    if(game.state === "STOP") {
-      game.start();
-    }
-  }
-  else if(event.keyCode === 32) {
-    mute_unmute();
-  }
-  
-  turnSound.pause();
-  turnSound.currentTime = 0;
-  turnSound.play();
-}
-
 function touchInput() {
   const temp = (this.id).toUpperCase();
   const lastKey = keyBuffer[keyBuffer.length - 1];
   
-  if((temp !== lastKey) && ((temp === "RIGHT" && lastKey !== "LEFT") || (temp === "LEFT" && lastKey !== "RIGHT") || (temp === "UP" && lastKey !== "DOWN") || (temp === "DOWN" && lastKey !== "UP"))) {
+  if((temp !== lastKey) && ((temp === "RIGHT" && key !== "LEFT") || (temp === "LEFT" && key !== "RIGHT") || (temp === "UP" && key !== "DOWN") || (temp === "DOWN" && key !== "UP"))) {
       keyBuffer.push(temp);
   }
   
@@ -71,9 +35,6 @@ if(snake.length <= 0) {
 	console.error("length cannot be less than 1");
 }
 else {
-  // Keyboard listener
-  //document.addEventListener("keydown", keyboardInput);
-  
   // Touch listeners
   rightBtn.addEventListener("touchstart", touchInput);
   leftBtn.addEventListener("touchstart", touchInput);
@@ -85,5 +46,4 @@ else {
   // Unmute sound
   game.sound.unmute();
 }
-
 

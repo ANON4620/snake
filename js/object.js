@@ -26,7 +26,7 @@ const game = {
   		game.clearCanvas();
   		food.draw();
   		snake.draw();
-		game.input();
+	    	game.input();
   		snake.move();
   
   		if(food.hasEaten()) {
@@ -178,9 +178,9 @@ const snake = {
 };
 
 const food = {
-	x: null,
-	y: null,
-	box: snake.box,
+  x: null,
+  y: null,
+  box: snake.box,
 	
   draw() {
     ctx.fillStyle = "Red";
@@ -188,8 +188,7 @@ const food = {
   },
 
   changePosition() {
-  	const arr = [];
-  	
+  	const arr = [];	
   	for(let x = 0; x < canvas.width - this.box; x += this.box) {
   		for(let y = 0; y < canvas.height - this.box; y += this.box) {
 
@@ -227,5 +226,4 @@ const food = {
     return false;
   }
 };
-
 
