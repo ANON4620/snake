@@ -4,12 +4,17 @@ const score = document.getElementById("score");
 const mute_btn = document.getElementById("mute-btn");
 const unmute_btn = document.getElementById("unmute-btn");
 
+const lastTail = {
+  x: null,
+  y: null
+};
+
 const game = {
   state: "STOP",
   score: 0,
 
   clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(-15, 0, canvas.width, canvas.height);
   },
   
   input() {
@@ -17,40 +22,47 @@ const game = {
       key = keyBuffer.shift();
   },
 
+  animationLoop() {
+    let loop;
+    
+    food.draw();
+    snake.draw(lastTail);
+    
+    lastTail.x = snake.tail[snake.length - 1].x;
+    lastTail.y = snake.tail[snake.length - 1].y;
+    
+    game.input();
+    snake.move();
+    
+    if(food.hasEaten()) {
+      eatingSound.pause();
+      eatingSound.currentTime = 0;
+      eatingSound.play();
+      game.updateScore();
+      snake.addTail();
+      food.changePosition();
+    }
+    
+    if(snake.hasCollided()) {
+      cancelAnimationFrame(game.animationLoop);
+      clearTimeout(loop);
+      game.over();
+      return;
+    }
+    
+    loop = setTimeout(() => {
+      requestAnimationFrame(game.animationLoop);
+    }, 1000/8);
+  },
+  
   start() {
   	game.state = "RUNNING";
-	snake.setPosition(0, 0);
+	snake.setPosition(-snake.box, 0);
   	food.changePosition();
-  	const prevLastTailPos = {
-  	  x: null,
-  	  y: null
-  	};
   	
-  	const running = setInterval(() => {
-  		ctx.clearRect(prevLastTailPos.x, prevLastTailPos.y, snake.box, snake.box);
-  		prevLastTailPos.x = snake.tail[snake.tail.length - 1].x;
-  		prevLastTailPos.y = snake.tail[snake.tail.length - 1].y;
-  		food.draw();
-  		snake.draw();
-	    	game.input();
-  		snake.move();
-  
-  		if(food.hasEaten()) {
-  		  eatingSound.pause();
-  		  eatingSound.currentTime = 0;
-  		  eatingSound.play();
-  		  game.updateScore();
-  		  snake.addTail();
-  		  food.changePosition();
-  		}
-  
-  		if(snake.hasCollided()) {
-  			clearInterval(running);
-  			game.over();
-  		}
-  	}, 150);
+  	requestAnimationFrame(game.animationLoop);
   },
-
+  
   over() {
     gameOverSound.pause();
     gameOverSound.currentTime = 0;
@@ -59,7 +71,7 @@ const game = {
       this.state = "STOP";
       alert("Game Over!");
       this.reset();
-    }, 1300);
+    }, 1500);
   },
 
   reset() {
@@ -107,10 +119,15 @@ const snake = {
   tail: [],
   length: init_len,
  	
-  draw() {
+  draw(lastTail) {
+    // delete tail
+    ctx.clearRect(lastTail.x, lastTail.y, snake.box, snake.box);
+    
+    // draw body
     ctx.fillStyle = "Black";
     ctx.fillRect(this.tail[1].x, this.tail[1].y, this.box, this.box);
     
+    // draw head
     ctx.fillStyle = "Purple";
     ctx.fillRect(this.tail[0].x, this.tail[0].y, this.box, this.box);
   },
@@ -135,28 +152,30 @@ const snake = {
     switch(key) {
     	case "RIGHT":
     		this.tail[0].x += this.box;
-    		if(this.tail[0].x > canvas.width - this.box)
-    			this.tail[0].x = 0;
     		break;
     
     	case "LEFT":
     		this.tail[0].x -= this.box;
-    		if(this.tail[0].x < 0)
-    			this.tail[0].x = canvas.width - this.box;
     		break;
     
     	case "UP":
     		this.tail[0].y -= this.box;
-    		if(this.tail[0].y < 0)
-    			this.tail[0].y = canvas.height - this.box;
     		break;
     
     	case "DOWN":
     		this.tail[0].y += this.box;
-    		if(this.tail[0].y > canvas.height - this.box)
-    			this.tail[0].y = 0;
     		break;
     }
+    
+    
+    if(this.tail[0].x > canvas.width - this.box)
+      this.tail[0].x = 0;
+    if(this.tail[0].x < 0)
+      this.tail[0].x = canvas.width - this.box;
+    if(this.tail[0].y < 0)
+      this.tail[0].y = canvas.height - this.box;
+    if(this.tail[0].y > canvas.height - this.box)
+      this.tail[0].y = 0;
     
   },
   
@@ -166,7 +185,7 @@ const snake = {
       if((this.tail[0].x === this.tail[i].x) && 
         (this.tail[0].y === this.tail[i].y)) {
         return true;
-	}
+        }
     }
 
     return false;
