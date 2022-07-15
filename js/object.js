@@ -11,7 +11,7 @@ const game = {
   clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   },
- 
+  
   input() {
     if(keyBuffer.length > 0)
       key = keyBuffer.shift();
@@ -21,9 +21,15 @@ const game = {
   	game.state = "RUNNING";
 	snake.setPosition(0, 0);
   	food.changePosition();
+  	const prevLastTailPos = {
+  	  x: null,
+  	  y: null
+  	};
   	
   	const running = setInterval(() => {
-  		game.clearCanvas();
+  		ctx.clearRect(prevLastTailPos.x, prevLastTailPos.y, snake.box, snake.box);
+  		prevLastTailPos.x = snake.tail[snake.tail.length - 1].x;
+  		prevLastTailPos.y = snake.tail[snake.tail.length - 1].y;
   		food.draw();
   		snake.draw();
 	    	game.input();
@@ -103,9 +109,7 @@ const snake = {
  	
   draw() {
     ctx.fillStyle = "Black";
-    for(let i = this.length - 1; i > 0; i--) {
-      ctx.fillRect(this.tail[i].x, this.tail[i].y, this.box, this.box);
-    }
+    ctx.fillRect(this.tail[1].x, this.tail[1].y, this.box, this.box);
     
     ctx.fillStyle = "Purple";
     ctx.fillRect(this.tail[0].x, this.tail[0].y, this.box, this.box);
@@ -162,7 +166,7 @@ const snake = {
       if((this.tail[0].x === this.tail[i].x) && 
         (this.tail[0].y === this.tail[i].y)) {
         return true;
-        }
+	}
     }
 
     return false;
@@ -188,7 +192,8 @@ const food = {
   },
 
   changePosition() {
-  	const arr = [];	
+  	const arr = [];
+  	
   	for(let x = 0; x < canvas.width - this.box; x += this.box) {
   		for(let y = 0; y < canvas.height - this.box; y += this.box) {
 
@@ -226,4 +231,6 @@ const food = {
     return false;
   }
 };
+
+
 
