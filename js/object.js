@@ -14,7 +14,7 @@ const game = {
   score: 0,
 
   clearCanvas() {
-    ctx.clearRect(-15, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   },
   
   input() {
