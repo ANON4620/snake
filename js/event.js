@@ -16,10 +16,10 @@ function mute_unmute() {
 }
 
 function touchInput() {
-  const temp = (this.id).toUpperCase();
+  const temp = (this.id);
   const lastKey = keyBuffer[keyBuffer.length - 1];
   
-  if((temp !== lastKey) && ((temp === "RIGHT" && key !== "LEFT") || (temp === "LEFT" && key !== "RIGHT") || (temp === "UP" && key !== "DOWN") || (temp === "DOWN" && key !== "UP"))) {
+  if((temp !== lastKey) && ((temp === "right" && key !== "left") || (temp === "left" && key !== "right") || (temp === "up" && key !== "down") || (temp === "down" && key !== "up"))) {
       keyBuffer.push(temp);
   }
   

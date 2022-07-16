@@ -44,7 +44,6 @@ const game = {
     }
     
     if(snake.hasCollided()) {
-      cancelAnimationFrame(game.animationLoop);
       clearTimeout(loop);
       game.over();
       return;
@@ -150,19 +149,19 @@ const snake = {
     
     
     switch(key) {
-    	case "RIGHT":
+    	case "right":
     		this.tail[0].x += this.box;
     		break;
     
-    	case "LEFT":
+    	case "left":
     		this.tail[0].x -= this.box;
     		break;
     
-    	case "UP":
+    	case "up":
     		this.tail[0].y -= this.box;
     		break;
     
-    	case "DOWN":
+    	case "down":
     		this.tail[0].y += this.box;
     		break;
     }
