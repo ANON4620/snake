@@ -21,6 +21,13 @@ body {
   user-select:none;
 }
 
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .mute-unmute-btn {
   margin: 3%;
   width: 10vw;
@@ -28,6 +35,11 @@ body {
   border: none;
   background-color: white;
   background-size: cover;
+}
+
+#buttons {
+  display: flex;
+  flex-direction: row;
 }
 
 .controller {
@@ -43,7 +55,7 @@ body {
   text-align: center;
   height: 12vh;
   width: 22vw;
-  margin: 0.1%;
+  margin: 0.8%;
   outline: none;
 }
 
@@ -63,7 +75,7 @@ p {
 }
 
 #credits {
-  font-size: 10pt;
+  font-size: 7pt;
   margin-top: 5%;
 }
 

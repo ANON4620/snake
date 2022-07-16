@@ -14,22 +14,24 @@
 </head>
 
 <body>
-  <img id="mute-btn" class="mute-unmute-btn" src="./icons/mute.png"></img>
-  <img id="unmute-btn" class="mute-unmute-btn" src="./icons/unmute.png"></img>
-    
-  <center>
+  <img id="mute-btn" class="mute-unmute-btn" src="./icons/mute.png" alt="mute-button">
+  <img id="unmute-btn" class="mute-unmute-btn" src="./icons/unmute.png" alt="unmute-button">
+
+  <div id="container">
     <canvas id="canvas" width="300" height="300" style="border: 1px solid black">
         You are running an outdated browser!
     </canvas>
     <p id="score">SCORE: 0</p>
 
-    <button id="up" class="controller" style="margin: 2%">Up</button><br>
-    <button id="left" class="controller">Left</button>
-    <button id="down" class="controller">Down</button>
-    <button id="right" class="controller">Right</button>
-      
-    <p id="credits">Developer: Swarnadeep Sarkar (ANON4620)</p>
-  </center>
+    <button id="up" class="controller" style="margin: 1.5%">Up</button>
+    <div id="buttons">
+      <button id="left" class="controller">Left</button>
+      <button id="down" class="controller">Down</button>
+      <button id="right" class="controller">Right</button>
+    </div>
+    <p id="credits">Developer: Swarnadeep Sarkar</p>
+  </div>
+  
 
   <noscript>
     Your browser does not support JavaScript!
