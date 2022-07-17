@@ -23,8 +23,6 @@ const game = {
   },
 
   animationLoop() {
-    let loop;
-    
     food.draw();
     snake.draw(lastTail);
     
@@ -44,12 +42,11 @@ const game = {
     }
     
     if(snake.hasCollided()) {
-      clearTimeout(loop);
       game.over();
       return;
     }
     
-    loop = setTimeout(() => {
+    setTimeout(() => {
       requestAnimationFrame(game.animationLoop);
     }, 1000/8);
   },
