@@ -1,5 +1,6 @@
 let key = null;
 let keyBuffer = [];
+let canTouch = true;
 
 const rightBtn = document.getElementById("right");
 const leftBtn = document.getElementById("left");
@@ -16,6 +17,10 @@ function mute_unmute() {
 }
 
 function touchInput() {
+  if(canTouch === false)
+    return;
+  canTouch = false;
+
   const temp = (this.id);
   const lastKey = keyBuffer[keyBuffer.length - 1];
   
@@ -42,7 +47,12 @@ else {
   downBtn.addEventListener("touchstart", touchInput);
   mute_btn.addEventListener("touchstart", mute_unmute);
   unmute_btn.addEventListener("touchstart", mute_unmute);
-	
+
+  rightBtn.addEventListener("touchend", () => {canTouch = true;});
+  leftBtn.addEventListener("touchend", () => {canTouch = true;});
+  upBtn.addEventListener("touchend", () => {canTouch = true;});
+  downBtn.addEventListener("touchend", () => {canTouch = true;});
+
   // Unmute sound
   game.sound.unmute();
 }
