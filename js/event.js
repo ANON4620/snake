@@ -22,7 +22,7 @@ function touchInput() {
   canTouch = false;
 
   const temp = (this.id);
-  const lastKey = keyBuffer[keyBuffer.length - 1];
+  const lastkey = keyBuffer[keyBuffer.length - 1];
   
   if((temp !== lastkey) && ((temp === "right" && lastkey !== "left" && key !== "left") || (temp === "left" && lastkey !== "right" && key !== "right") || (temp === "up" && lastkey !== "down" && key !== "down") || (temp === "down" && lastkey !== "up" && key !== "up"))) {
       keyBuffer.push(temp);
