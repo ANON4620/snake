@@ -24,14 +24,14 @@ function touchInput() {
   const temp = (this.id);
   const lastkey = keyBuffer[keyBuffer.length - 1];
   
-  if((temp !== lastkey) && ((temp === "right" && lastkey !== "left" && key !== "left") || (temp === "left" && lastkey !== "right" && key !== "right") || (temp === "up" && lastkey !== "down" && key !== "down") || (temp === "down" && lastkey !== "up" && key !== "up"))) {
-      keyBuffer.push(temp);
+  if((temp !== lastkey && temp !== key) && ((temp === "right" && lastkey !== "left" && key !== "left") || (temp === "left" && lastkey !== "right" && key !== "right") || (temp === "up" && lastkey !== "down" && key !== "down") || (temp === "down" && lastkey !== "up" && key !== "up"))) {
+    keyBuffer.push(temp);
+    
+    turnSound.pause();
+    turnSound.currentTime = 0;
+    turnSound.play();
   }
   
-  turnSound.pause();
-  turnSound.currentTime = 0;
-  turnSound.play();
-
   if(game.state === "STOP") {
     game.start();
   }
