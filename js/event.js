@@ -24,20 +24,21 @@ function touchInput() {
   const temp = (this.id);
   const lastKey = keyBuffer[keyBuffer.length - 1];
   
-  if((temp !== lastKey) && ((temp === "right" && key !== "left") || (temp === "left" && key !== "right") || (temp === "up" && key !== "down") || (temp === "down" && key !== "up"))) {
+  if((temp !== lastkey) && ((temp === "right" && lastkey !== "left" && key !== "left") || (temp === "left" && lastkey !== "right" && key !== "right") || (temp === "up" && lastkey !== "down" && key !== "down") || (temp === "down" && lastkey !== "up" && key !== "up"))) {
       keyBuffer.push(temp);
   }
   
   turnSound.pause();
   turnSound.currentTime = 0;
   turnSound.play();
+
   if(game.state === "STOP") {
     game.start();
   }
 }
 
-if(snake.length <= 0) {
-	console.error("length cannot be less than 1");
+if(snake.length < 2) {
+	console.error("length cannot be less than 2");
 }
 else {
   // Touch listeners

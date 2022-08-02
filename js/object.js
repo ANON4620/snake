@@ -4,10 +4,6 @@ const score = document.getElementById("score");
 const mute_btn = document.getElementById("mute-btn");
 const unmute_btn = document.getElementById("unmute-btn");
 
-const lastTail = {
-  x: null,
-  y: null
-};
 
 const game = {
   state: "STOP",
@@ -21,42 +17,13 @@ const game = {
     if(keyBuffer.length > 0)
       key = keyBuffer.shift();
   },
-
-  animationLoop() {
-    food.draw();
-    snake.draw(lastTail);
-    
-    lastTail.x = snake.tail[snake.length - 1].x;
-    lastTail.y = snake.tail[snake.length - 1].y;
-    
-    game.input();
-    snake.move();
-    
-    if(food.hasEaten()) {
-      eatingSound.pause();
-      eatingSound.currentTime = 0;
-      eatingSound.play();
-      game.updateScore();
-      snake.addTail();
-      food.changePosition();
-    }
-    
-    if(snake.hasCollided()) {
-      game.over();
-      return;
-    }
-    
-    setTimeout(() => {
-      requestAnimationFrame(game.animationLoop);
-    }, 1000/8);
-  },
   
   start() {
   	game.state = "RUNNING";
-	snake.setPosition(-snake.box, 0);
+  	snake.setPosition(-snake.box, 0);
   	food.changePosition();
   	
-  	requestAnimationFrame(game.animationLoop);
+  	requestAnimationFrame(animationLoop);
   },
   
   over() {
@@ -114,10 +81,14 @@ const snake = {
   box: 15,
   tail: [],
   length: init_len,
+  lastTail: {
+    x: null,
+    y: null
+  },
  	
-  draw(lastTail) {
+  draw() {
     // delete tail
-    ctx.clearRect(lastTail.x, lastTail.y, snake.box, snake.box);
+    ctx.clearRect(snake.lastTail.x, snake.lastTail.y, snake.box, snake.box);
     
     // draw body
     ctx.fillStyle = "Black";
@@ -129,8 +100,7 @@ const snake = {
   },
   
   setPosition(x, y) {
-    for(let i = 0; i < this.length; i++) 
-    {
+    for(let i = 0; i < this.length; i++) {
       this.tail.push({
         x: x,
         y: y
@@ -181,7 +151,7 @@ const snake = {
       if((this.tail[0].x === this.tail[i].x) && 
         (this.tail[0].y === this.tail[i].y)) {
         return true;
-        }
+	}
     }
 
     return false;
@@ -247,5 +217,32 @@ const food = {
   }
 };
 
+function animationLoop() {
+  food.draw();
+  snake.draw();
 
+  snake.lastTail.x = snake.tail[snake.length - 1].x;
+  snake.lastTail.y = snake.tail[snake.length - 1].y;
+
+  game.input();
+  snake.move();
+
+  if(food.hasEaten()) {
+    eatingSound.pause();
+    eatingSound.currentTime = 0;
+    eatingSound.play();
+    game.updateScore();
+    snake.addTail();
+    food.changePosition();
+  }
+
+  if(snake.hasCollided()) {
+    game.over();
+    return;
+  }
+
+  setTimeout(() => {
+    requestAnimationFrame(animationLoop);
+  }, 1000 / 8);
+}
 
