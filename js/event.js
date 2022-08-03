@@ -21,7 +21,7 @@ function touchInput() {
     return;
   canTouch = false;
 
-  const temp = (this.id);
+  const temp = this.id; // id of the button that is touched
   const lastkey = keyBuffer[keyBuffer.length - 1];
   
   if((temp !== lastkey && temp !== key) && ((temp === "right" && lastkey !== "left" && key !== "left") || (temp === "left" && lastkey !== "right" && key !== "right") || (temp === "up" && lastkey !== "down" && key !== "down") || (temp === "down" && lastkey !== "up" && key !== "up"))) {
@@ -37,10 +37,16 @@ function touchInput() {
   }
 }
 
-if(snake.length < 2) {
-	console.error("length cannot be less than 2");
+if((init_len < 2) || (snake.length < 2)) {
+  console.error("snake length cannot be less than 2");
+}
+else if(snake.box < 1) {
+  console.error("snake.box cannot be less than 1");
 }
 else {
+  canvas.width = game.screen.setWidth() - (snake.box * 2);
+  canvas.height = game.screen.setHeight();
+
   // Touch listeners
   rightBtn.addEventListener("touchstart", touchInput);
   leftBtn.addEventListener("touchstart", touchInput);

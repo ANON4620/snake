@@ -28,6 +28,9 @@ body {
   flex-direction: column;
 }
 
+#canvas {
+  border: 1px solid black;
+}
 .mute-unmute-btn {
   margin: 3%;
   width: 10vw;
@@ -48,9 +51,9 @@ body {
   border: 2px solid black;
   border-radius: 15px;
   box-shadow: 0 5px #999;
-  font-size: 12pt;
+  font-size: 4.5vw;
   font-weight: bold;
-  height: 12vh;
+  height: 11vh;
   width: 22vw;
   margin: 0.8%;
   outline: none;
@@ -62,17 +65,16 @@ body {
   transform: translateY(1px);
 }
 
-p {
+#score {
+  font-size: 5vw;
+  margin: 4%;
   font-weight: bold;
 }
 
-#score {
-  font-size: 15pt;
-  margin: 4%;
-}
-
 #credits {
-  font-size: 7pt;
-  margin-top: 5%;
+  font-size: 2.5vw;
+  margin: 1%;
+  font-weight: bold;
+  float: right;
 }
 

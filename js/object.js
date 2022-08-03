@@ -52,6 +52,22 @@ const game = {
     score.innerText = `SCORE: ${this.score}`;
   },
 
+  screen: {
+    setWidth() {
+      let canvas_width = parseInt(window.innerWidth);
+      while(canvas_width % snake.box !== 0)
+        canvas_width--;
+      return canvas_width;
+    },
+
+    setHeight() {
+      let canvas_height = parseInt(window.innerHeight/2);
+      while(canvas_height % snake.box !== 0)
+        canvas_height--;
+      return canvas_height;
+    }
+  },
+
   sound: {
     state: "UNMUTE",
     
@@ -78,8 +94,10 @@ const game = {
 
 const init_len = 3;
 const snake = {
-  box: 15,
+  box: 20,
   tail: [],
+  head_color: "Purple",
+  body_color: "Black",
   length: init_len,
   lastTail: {
     x: null,
@@ -91,11 +109,11 @@ const snake = {
     ctx.clearRect(snake.lastTail.x, snake.lastTail.y, snake.box, snake.box);
     
     // draw body
-    ctx.fillStyle = "Black";
+    ctx.fillStyle = snake.body_color;
     ctx.fillRect(this.tail[1].x, this.tail[1].y, this.box, this.box);
     
     // draw head
-    ctx.fillStyle = "Purple";
+    ctx.fillStyle = snake.head_color;
     ctx.fillRect(this.tail[0].x, this.tail[0].y, this.box, this.box);
   },
   
@@ -169,10 +187,11 @@ const snake = {
 const food = {
   x: null,
   y: null,
+  color: "Red",
   box: snake.box,
 	
   draw() {
-    ctx.fillStyle = "Red";
+    ctx.fillStyle = food.color;
     ctx.fillRect(this.x, this.y, this.box, this.box);
   },
 
