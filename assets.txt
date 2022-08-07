@@ -6,3 +6,5 @@ https://icons8.com/icons/set/Audio
 https://icons8.com/icons/set/mute-unmute
 https://favicon.io/emoji-favicons/snake/
 
+FONTS:
+https://fonts.google.com/specimen/Lato?query=lato
