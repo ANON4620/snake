@@ -32,7 +32,7 @@ const game = {
     gameOverSound.play();
     setTimeout(() => {
       this.state = "STOP";
-      alert("Game Over!");
+      alert(`Game Over! Your score is ${this.score}.`);
       this.reset();
     }, 1500);
   },
@@ -96,8 +96,8 @@ const init_len = 3;
 const snake = {
   box: 20,
   tail: [],
-  head_color: "Purple",
-  body_color: "Black",
+  head_color: "white",
+  body_color: "white",
   length: init_len,
   lastTail: {
     x: null,
@@ -187,7 +187,7 @@ const snake = {
 const food = {
   x: null,
   y: null,
-  color: "Red",
+  color: "#ff6666",
   box: snake.box,
 	
   draw() {
